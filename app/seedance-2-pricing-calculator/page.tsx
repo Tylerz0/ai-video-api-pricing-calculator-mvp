@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { PricingCalculator } from "@/components/pricing-calculator";
+import { siteConfig } from "@/lib/site";
 import pricingData from "@/pricing-data.json";
 
 export const dynamic = "force-static";
@@ -35,6 +36,8 @@ const defaultComparison = pricingData.pricingRows
 
 const cheapestPriceRow = defaultComparison[0];
 const highestPriceRow = defaultComparison[defaultComparison.length - 1];
+const siteUrl = siteConfig.url.replace(/\/$/, "");
+const pageUrl = `${siteUrl}/seedance-2-pricing-calculator`;
 
 function formatCurrency(value: number, maximumFractionDigits = 4) {
   return new Intl.NumberFormat("en-US", {
@@ -45,9 +48,121 @@ function formatCurrency(value: number, maximumFractionDigits = 4) {
   }).format(value);
 }
 
+const faqItems = [
+  {
+    question: "How much does Seedance 2 cost per 8-second video?",
+    answer: `In the default 720p comparison, an 8-second video ranges from ${formatCurrency(cheapestPriceRow.costPerVideo, 5)} for ${cheapestPriceRow.provider} ${cheapestPriceRow.mode} to ${formatCurrency(highestPriceRow.costPerVideo, 4)} for ${highestPriceRow.provider} ${highestPriceRow.mode}. Final pricing depends on the provider, model mode, resolution, and settings.`,
+  },
+  {
+    question: "Which Seedance 2 API provider is cheapest?",
+    answer: `${cheapestPriceRow.provider} offers ${cheapestPriceRow.modelName} in ${cheapestPriceRow.mode} mode at ${cheapestPriceRow.resolution} for the lowest listed rate in the default 720p comparison: ${formatCurrency(cheapestPriceRow.pricePerSecond)} per output second. OpenRouter and other provider-routed prices should be verified on the linked provider page before production use.`,
+  },
+  {
+    question: "How much does it cost to generate 1,000 Seedance 2 videos?",
+    answer: `For 1,000 720p videos at 8 seconds each, the listed estimates range from ${formatCurrency(cheapestPriceRow.monthlyCost, 2)} for ${cheapestPriceRow.provider} ${cheapestPriceRow.mode} to ${formatCurrency(highestPriceRow.monthlyCost, 2)} for ${highestPriceRow.provider} ${highestPriceRow.mode}. The calculator lets you change volume, duration, and resolution.`,
+  },
+  {
+    question: "Is Seedance 2 Fast cheaper than standard Seedance 2?",
+    answer: `Yes in the listed same-provider comparisons. fal.ai Fast is ${formatCurrency(0.2419)} per second versus ${formatCurrency(0.3034)} for Standard, while PiAPI Fast is ${formatCurrency(0.16)} versus ${formatCurrency(0.2)} for Pro at 720p. On OpenRouter, Fast versus Standard is ${formatCurrency(0.0538)} versus ${formatCurrency(0.06726)} at 480p, ${formatCurrency(0.121)} versus ${formatCurrency(0.1512)} at 720p, and ${formatCurrency(0.2722)} versus ${formatCurrency(0.3402)} at 1080p.`,
+  },
+];
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${pageUrl}#software-application`,
+      name: "Seedance 2 API Pricing Calculator",
+      description:
+        "A web calculator for estimating Seedance 2 API cost per video and comparing public provider rates at the same output resolution.",
+      url: pageUrl,
+      applicationCategory: "DeveloperApplication",
+      operatingSystem: "Any",
+      isAccessibleForFree: true,
+      featureList: [
+        "Compare public Seedance 2 API pricing by provider",
+        "Filter provider rates by output resolution",
+        "Estimate cost per video",
+        "Estimate monthly generation cost",
+      ],
+    },
+    {
+      "@type": "Dataset",
+      "@id": `${pageUrl}#dataset`,
+      name: "Seedance 2 public API pricing comparison",
+      description:
+        "Public Seedance 2 provider pricing manually collected from linked provider pages and normalized to USD per output second.",
+      url: pageUrl,
+      dateModified: pricingData.lastUpdated,
+      creator: {
+        "@type": "Organization",
+        name: "Video API Cost",
+        url: siteUrl,
+      },
+      variableMeasured: [
+        "Provider",
+        "Model and mode",
+        "Output resolution",
+        "Price per output second",
+        "Estimated cost per video",
+        "Estimated monthly cost",
+      ],
+      measurementTechnique:
+        "Manual collection from linked public provider pricing pages, normalization to USD per output second, and comparison within the same output resolution.",
+      isBasedOn: Array.from(
+        new Set(pricingData.pricingRows.map((row) => row.sourceUrl)),
+      ),
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${pageUrl}#breadcrumbs`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: siteUrl,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Video Generation API Pricing",
+          item: `${siteUrl}/video-generation-api-pricing`,
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Seedance 2 API Pricing Calculator",
+          item: pageUrl,
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${pageUrl}#faq`,
+      mainEntity: faqItems.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
+    },
+  ],
+};
+
 export default function SeedancePricingCalculatorPage() {
   return (
     <div className="shell page-section">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+        type="application/ld+json"
+      />
+
       <nav className="breadcrumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link>
         <span aria-hidden="true">/</span>
@@ -67,6 +182,50 @@ export default function SeedancePricingCalculatorPage() {
         <p className="updated-date">
           Pricing data last updated{" "}
           <time dateTime={pricingData.lastUpdated}>{displayDate}</time>
+        </p>
+      </section>
+
+      <section className="cost-summary" aria-labelledby="cost-summary-title">
+        <p className="eyebrow">Cost summary</p>
+        <h2 id="cost-summary-title">Seedance 2 720p cost summary</h2>
+        <p className="cost-summary-scenario">
+          <strong>Default scenario:</strong>{" "}
+          {pricingData.defaultInputs.videosPerMonth.toLocaleString("en-US")}{" "}
+          videos/month <span aria-hidden="true">·</span>{" "}
+          {pricingData.defaultInputs.secondsPerVideo} seconds/video{" "}
+          <span aria-hidden="true">·</span> 720p
+        </p>
+        <div className="cost-summary-details">
+          <p>
+            Listed 720p estimates range from{" "}
+            <strong>{formatCurrency(cheapestPriceRow.costPerVideo, 5)}</strong>{" "}
+            to{" "}
+            <strong>{formatCurrency(highestPriceRow.costPerVideo, 4)}</strong>{" "}
+            per video.
+          </p>
+          <p>
+            For{" "}
+            {pricingData.defaultInputs.videosPerMonth.toLocaleString("en-US")}{" "}
+            videos per month, that equals about{" "}
+            <strong>{formatCurrency(cheapestPriceRow.monthlyCost, 2)}</strong>{" "}
+            to{" "}
+            <strong>{formatCurrency(highestPriceRow.monthlyCost, 2)}</strong>.
+          </p>
+          <p>
+            <strong>Lowest listed 720p route:</strong>{" "}
+            {cheapestPriceRow.provider} {cheapestPriceRow.modelName}{" "}
+            {cheapestPriceRow.mode} at{" "}
+            {formatCurrency(cheapestPriceRow.pricePerSecond)} per output second.
+          </p>
+          <p>
+            <strong>Formula:</strong> monthly cost = videos × seconds × price per
+            second.
+          </p>
+        </div>
+        <p className="cost-summary-note">
+          These estimates are based on public prices as of {displayDate}, not
+          billing guarantees. Verify the linked provider page before production
+          use.
         </p>
       </section>
 
@@ -161,7 +320,7 @@ export default function SeedancePricingCalculatorPage() {
         </div>
         <p className="trust-note">
           The default comparison uses 720p rows only so providers are compared
-          on the same output resolution. Other resolutions may have different
+          at the same output resolution. Other resolutions may have different
           pricing and availability.{" "}
           Prices are based on public provider pricing pages as of{" "}
           {pricingData.lastUpdated}. Always verify pricing and availability
@@ -175,6 +334,42 @@ export default function SeedancePricingCalculatorPage() {
         defaultVideosPerMonth={pricingData.defaultInputs.videosPerMonth}
         pricingRows={pricingData.pricingRows}
       />
+
+      <section className="content-section methodology" aria-labelledby="methodology-title">
+        <h2 id="methodology-title">Methodology</h2>
+        <p>
+          This calculator uses a small, manually maintained dataset designed
+          for transparent, like-for-like price estimates.
+        </p>
+        <ul>
+          <li>
+            <strong>Collection:</strong> Rates are transcribed from the public
+            provider pages linked in the comparison table.
+          </li>
+          <li>
+            <strong>Normalization:</strong> Listed rates are represented in US
+            dollars per output second.
+          </li>
+          <li>
+            <strong>Fair comparison:</strong> Providers are compared only
+            within the selected output resolution; the server-rendered default
+            uses 720p.
+          </li>
+          <li>
+            <strong>Calculation:</strong> Monthly cost equals videos per month ×
+            seconds per video × provider price per second.
+          </li>
+          <li>
+            <strong>Exclusions:</strong> Estimates do not include taxes,
+            credits, volume discounts, retries, storage, transfer fees, or
+            provider-specific account terms.
+          </li>
+        </ul>
+        <p>
+          The pricing dataset was last updated on{" "}
+          <time dateTime={pricingData.lastUpdated}>{displayDate}</time>.
+        </p>
+      </section>
 
       <section className="content-section" aria-labelledby="sources-title">
         <h2 id="sources-title">Pricing sources</h2>
@@ -204,59 +399,12 @@ export default function SeedancePricingCalculatorPage() {
 
       <section className="content-section faq" aria-labelledby="faq-title">
         <h2 id="faq-title">Frequently asked questions</h2>
-        <details>
-          <summary>How much does Seedance 2 cost per 8-second video?</summary>
-          <p>
-            In the default 720p comparison, an 8-second video ranges from{" "}
-            {formatCurrency(cheapestPriceRow.costPerVideo, 5)} for{" "}
-            {cheapestPriceRow.provider} {cheapestPriceRow.mode} to{" "}
-            {formatCurrency(highestPriceRow.costPerVideo, 4)} for{" "}
-            {highestPriceRow.provider} {highestPriceRow.mode} at{" "}
-            {highestPriceRow.resolution}. Final pricing depends on the provider,
-            model mode, resolution, and settings.
-          </p>
-        </details>
-        <details>
-          <summary>Which Seedance 2 API provider is cheapest?</summary>
-          <p>
-            {cheapestPriceRow.provider} offers{" "}
-            {cheapestPriceRow.modelName} in {cheapestPriceRow.mode} mode at{" "}
-            {cheapestPriceRow.resolution} for the lowest listed rate in the
-            default 720p comparison:{" "}
-            {formatCurrency(cheapestPriceRow.pricePerSecond)} per output second.
-            OpenRouter and other provider-routed prices should be verified on
-            the linked provider page before production use.
-          </p>
-        </details>
-        <details>
-          <summary>
-            How much does it cost to generate 1,000 Seedance 2 videos?
-          </summary>
-          <p>
-            For 1,000 720p videos at 8 seconds each, the listed estimates range
-            from {formatCurrency(cheapestPriceRow.monthlyCost, 2)} for{" "}
-            {cheapestPriceRow.provider} {cheapestPriceRow.mode} to{" "}
-            {formatCurrency(highestPriceRow.monthlyCost, 2)} for{" "}
-            {highestPriceRow.provider} {highestPriceRow.mode}. The calculator
-            lets you change volume, duration, and resolution.
-          </p>
-        </details>
-        <details>
-          <summary>
-            Is Seedance 2 Fast cheaper than standard Seedance 2?
-          </summary>
-          <p>
-            Yes in the listed same-provider comparisons. fal.ai Fast is{" "}
-            {formatCurrency(0.2419)} per second versus{" "}
-            {formatCurrency(0.3034)} for Standard, while PiAPI Fast is{" "}
-            {formatCurrency(0.16)} versus {formatCurrency(0.2)} for Pro at
-            720p. On OpenRouter, Fast versus Standard is{" "}
-            {formatCurrency(0.0538)} versus {formatCurrency(0.06726)} at 480p,{" "}
-            {formatCurrency(0.121)} versus {formatCurrency(0.1512)} at 720p,
-            and {formatCurrency(0.2722)} versus {formatCurrency(0.3402)} at
-            1080p.
-          </p>
-        </details>
+        {faqItems.map((item) => (
+          <details key={item.question}>
+            <summary>{item.question}</summary>
+            <p>{item.answer}</p>
+          </details>
+        ))}
       </section>
 
       <aside className="back-link">

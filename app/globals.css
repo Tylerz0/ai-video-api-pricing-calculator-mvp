@@ -189,6 +189,54 @@ h1 {
   margin: 22px 0 0;
 }
 
+.cost-summary {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 32px;
+  max-width: 920px;
+  padding: 24px 28px;
+}
+
+.cost-summary h2 {
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 12px;
+}
+
+.cost-summary-scenario {
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 18px;
+}
+
+.cost-summary-scenario strong,
+.cost-summary-details strong {
+  color: var(--text);
+}
+
+.cost-summary-details {
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 9px;
+  padding-top: 16px;
+}
+
+.cost-summary-details p {
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.cost-summary-note {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin: 16px 0 0;
+  padding-top: 14px;
+}
+
 .section-title {
   font-size: 1rem;
   margin-bottom: 16px;
@@ -575,6 +623,21 @@ tbody td {
 .content-section > p {
   color: var(--muted);
   line-height: 1.65;
+}
+
+.methodology ul {
+  color: var(--muted);
+  line-height: 1.65;
+  margin: 20px 0;
+  padding-left: 20px;
+}
+
+.methodology li + li {
+  margin-top: 10px;
+}
+
+.methodology strong {
+  color: var(--text);
 }
 
 .source-list {
