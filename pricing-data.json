@@ -1,0 +1,155 @@
+{
+  "model": "Seedance 2",
+  "lastUpdated": "2026-06-22",
+  "currency": "USD",
+  "defaultInputs": {
+    "videosPerMonth": 1000,
+    "secondsPerVideo": 8
+  },
+  "pricingRows": [
+    {
+      "provider": "fal.ai",
+      "modelName": "Seedance 2.0",
+      "mode": "Standard",
+      "resolution": "720p",
+      "pricePerSecond": 0.3034,
+      "billingUnit": "per output second",
+      "sourceLabel": "fal.ai Seedance 2.0 guide",
+      "sourceUrl": "https://fal.ai/learn/tools/how-to-use-seedance-2-0",
+      "note": "Public listed 720p standard rate."
+    },
+    {
+      "provider": "fal.ai",
+      "modelName": "Seedance 2.0 Fast",
+      "mode": "Fast",
+      "resolution": "720p",
+      "pricePerSecond": 0.2419,
+      "billingUnit": "per output second",
+      "sourceLabel": "fal.ai Seedance 2.0 guide",
+      "sourceUrl": "https://fal.ai/learn/tools/how-to-use-seedance-2-0",
+      "note": "Public listed 720p fast rate."
+    },
+    {
+      "provider": "PiAPI",
+      "modelName": "seedance-2",
+      "mode": "Pro",
+      "resolution": "720p",
+      "pricePerSecond": 0.2,
+      "billingUnit": "per output second",
+      "sourceLabel": "PiAPI Seedance 2 docs",
+      "sourceUrl": "https://piapi.ai/docs/seedance-api/seedance-2",
+      "note": "Public listed 720p pro rate."
+    },
+    {
+      "provider": "PiAPI",
+      "modelName": "seedance-2-fast",
+      "mode": "Fast",
+      "resolution": "720p",
+      "pricePerSecond": 0.16,
+      "billingUnit": "per output second",
+      "sourceLabel": "PiAPI Seedance 2 docs",
+      "sourceUrl": "https://piapi.ai/docs/seedance-api/seedance-2",
+      "note": "Public listed 720p fast rate."
+    },
+    {
+      "provider": "PiAPI",
+      "modelName": "seedance-2-mini",
+      "mode": "Mini",
+      "resolution": "720p",
+      "pricePerSecond": 0.15,
+      "billingUnit": "per output second",
+      "sourceLabel": "PiAPI Seedance 2 docs",
+      "sourceUrl": "https://piapi.ai/docs/seedance-api/seedance-2",
+      "note": "Mini tier listed for 720p."
+    },
+    {
+      "provider": "OpenRouter",
+      "modelName": "bytedance/seedance-2.0",
+      "mode": "Standard",
+      "resolution": "480p",
+      "pricePerSecond": 0.06726,
+      "billingUnit": "per output second",
+      "audioPricing": "same with or without audio",
+      "videoTokenPricePerMillion": 7,
+      "sourceLabel": "OpenRouter Seedance 2.0",
+      "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0#providers",
+      "note": "480p is $0.06726/sec with or without audio; video tokens are $7.00/M."
+    },
+    {
+      "provider": "OpenRouter",
+      "modelName": "bytedance/seedance-2.0",
+      "mode": "Standard",
+      "resolution": "720p",
+      "pricePerSecond": 0.1512,
+      "billingUnit": "per output second",
+      "audioPricing": "same with or without audio",
+      "videoTokenPricePerMillion": 7,
+      "sourceLabel": "OpenRouter Seedance 2.0",
+      "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0#providers",
+      "note": "720p is $0.1512/sec with or without audio; video tokens are $7.00/M."
+    },
+    {
+      "provider": "OpenRouter",
+      "modelName": "bytedance/seedance-2.0",
+      "mode": "Standard",
+      "resolution": "1080p",
+      "pricePerSecond": 0.3402,
+      "billingUnit": "per output second",
+      "audioPricing": "same with or without audio",
+      "videoTokenPricePerMillion": 7,
+      "sourceLabel": "OpenRouter Seedance 2.0",
+      "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0#providers",
+      "note": "1080p is $0.3402/sec with or without audio; video tokens are $7.00/M."
+    },
+    {
+      "provider": "OpenRouter",
+      "modelName": "bytedance/seedance-2.0-fast",
+      "mode": "Fast",
+      "resolution": "480p",
+      "pricePerSecond": 0.0538,
+      "billingUnit": "per output second",
+      "audioPricing": "same with or without audio",
+      "videoTokenPricePerMillion": 5.6,
+      "sourceLabel": "OpenRouter Seedance 2.0 Fast",
+      "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0-fast#providers",
+      "note": "480p is $0.0538/sec with or without audio; video tokens are $5.60/M."
+    },
+    {
+      "provider": "OpenRouter",
+      "modelName": "bytedance/seedance-2.0-fast",
+      "mode": "Fast",
+      "resolution": "720p",
+      "pricePerSecond": 0.121,
+      "billingUnit": "per output second",
+      "audioPricing": "same with or without audio",
+      "videoTokenPricePerMillion": 5.6,
+      "sourceLabel": "OpenRouter Seedance 2.0 Fast",
+      "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0-fast#providers",
+      "note": "720p is $0.121/sec with or without audio; video tokens are $5.60/M."
+    },
+    {
+      "provider": "OpenRouter",
+      "modelName": "bytedance/seedance-2.0-fast",
+      "mode": "Fast",
+      "resolution": "1080p",
+      "pricePerSecond": 0.2722,
+      "billingUnit": "per output second",
+      "audioPricing": "same with or without audio",
+      "videoTokenPricePerMillion": 5.6,
+      "sourceLabel": "OpenRouter Seedance 2.0 Fast",
+      "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0-fast#providers",
+      "note": "1080p is $0.2722/sec with or without audio; video tokens are $5.60/M."
+    },
+    {
+      "provider": "EvoLink",
+      "modelName": "Seedance 2.0",
+      "mode": "Standard",
+      "resolution": "720p",
+      "pricePerSecond": 0.199,
+      "billingUnit": "per output second",
+      "sourceLabel": "EvoLink Seedance 2.0",
+      "sourceUrl": "https://evolink.ai/seedance-2-0",
+      "note": "Public listed 720p standard route."
+    }
+  ]
+}
