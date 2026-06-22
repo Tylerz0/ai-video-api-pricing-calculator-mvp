@@ -42,14 +42,37 @@ export function PricingCalculator({
   defaultSecondsPerVideo,
   pricingRows,
 }: PricingCalculatorProps) {
+  const resolutionOptions = useMemo(() => {
+    const listedResolutions = new Set(
+      pricingRows.map((row) => row.resolution),
+    );
+    const preferredOrder = [
+      "480p",
+      "720p",
+      "1080p",
+      "provider-dependent",
+    ];
+    const orderedResolutions = preferredOrder.filter((resolution) =>
+      listedResolutions.delete(resolution),
+    );
+
+    return [...orderedResolutions, ...Array.from(listedResolutions).sort()];
+  }, [pricingRows]);
+
   const [videosPerMonth, setVideosPerMonth] = useState(defaultVideosPerMonth);
   const [secondsPerVideo, setSecondsPerVideo] = useState(
     defaultSecondsPerVideo,
+  );
+  const [selectedResolution, setSelectedResolution] = useState(() =>
+    resolutionOptions.includes("720p")
+      ? "720p"
+      : (resolutionOptions[0] ?? ""),
   );
 
   const comparison = useMemo(
     () =>
       pricingRows
+        .filter((row) => row.resolution === selectedResolution)
         .map((row) => ({
           ...row,
           costPerVideo: row.pricePerSecond * secondsPerVideo,
@@ -57,7 +80,7 @@ export function PricingCalculator({
             row.pricePerSecond * secondsPerVideo * videosPerMonth,
         }))
         .sort((a, b) => a.monthlyCost - b.monthlyCost),
-    [pricingRows, secondsPerVideo, videosPerMonth],
+    [pricingRows, secondsPerVideo, selectedResolution, videosPerMonth],
   );
 
   const generatedSeconds = videosPerMonth * secondsPerVideo;
@@ -78,6 +101,9 @@ export function PricingCalculator({
         <div>
           <p className="eyebrow">Monthly estimate</p>
           <h2 id="calculator-title">Calculate your Seedance 2 API costs</h2>
+          <p className="calculator-copy">
+            Compare providers at the same selected resolution.
+          </p>
         </div>
         <p className="usage-summary" aria-live="polite">
           {integerFormatter.format(generatedSeconds)} generated seconds / month
@@ -123,12 +149,26 @@ export function PricingCalculator({
             value={secondsPerVideo}
           />
         </label>
+        <label>
+          <span>Resolution</span>
+          <select
+            onChange={(event) => setSelectedResolution(event.target.value)}
+            value={selectedResolution}
+          >
+            {resolutionOptions.map((resolution) => (
+              <option key={resolution} value={resolution}>
+                {resolution}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
 
       <div className="table-wrap">
         <table>
           <caption className="sr-only">
-            Seedance 2 provider pricing comparison
+            Seedance 2 provider pricing comparison for the selected{" "}
+            {selectedResolution} resolution
           </caption>
           <thead>
             <tr>
@@ -141,54 +181,65 @@ export function PricingCalculator({
             </tr>
           </thead>
           <tbody>
-            {comparison.map((row, index) => (
-              <tr
-                key={`${row.provider}-${row.modelName}-${row.mode}-${row.resolution}`}
-              >
-                <th scope="row">
-                  <span>{row.provider}</span>
-                  {index === 0 ? <small>Lowest listed rate</small> : null}
-                </th>
-                <td>
-                  <span className="table-primary">{row.modelName}</span>
-                  <small className="table-secondary">{row.mode}</small>
-                </td>
-                <td>
-                  <span className="table-primary">{row.resolution}</span>
-                  {row.audioPricing ? (
-                    <small className="table-secondary">
-                      {row.audioPricing}
-                    </small>
-                  ) : null}
-                </td>
-                <td>
-                  <span className="table-primary">
-                    {formatCurrency(row.pricePerSecond, currency)}
-                  </span>
-                  {row.videoTokenPricePerMillion !== undefined ? (
-                    <small className="table-secondary">
-                      {formatCurrency(
-                        row.videoTokenPricePerMillion,
-                        currency,
-                      )}{" "}
-                      /M video tokens
-                    </small>
-                  ) : null}
-                </td>
-                <td>{formatCurrency(row.costPerVideo, currency)}</td>
-                <td className="monthly-cost">
-                  {formatCurrency(row.monthlyCost, currency)}
+            {comparison.length > 0 ? (
+              comparison.map((row, index) => (
+                <tr
+                  key={`${row.provider}-${row.modelName}-${row.mode}-${row.resolution}`}
+                >
+                  <th scope="row">
+                    <span>{row.provider}</span>
+                    {index === 0 ? (
+                      <small>Lowest rate for selected resolution</small>
+                    ) : null}
+                  </th>
+                  <td>
+                    <span className="table-primary">{row.modelName}</span>
+                    <small className="table-secondary">{row.mode}</small>
+                  </td>
+                  <td>
+                    <span className="table-primary">{row.resolution}</span>
+                    {row.audioPricing ? (
+                      <small className="table-secondary">
+                        {row.audioPricing}
+                      </small>
+                    ) : null}
+                  </td>
+                  <td>
+                    <span className="table-primary">
+                      {formatCurrency(row.pricePerSecond, currency)}
+                    </span>
+                    {row.videoTokenPricePerMillion !== undefined ? (
+                      <small className="table-secondary">
+                        {formatCurrency(
+                          row.videoTokenPricePerMillion,
+                          currency,
+                        )}{" "}
+                        /M video tokens
+                      </small>
+                    ) : null}
+                  </td>
+                  <td>{formatCurrency(row.costPerVideo, currency)}</td>
+                  <td className="monthly-cost">
+                    {formatCurrency(row.monthlyCost, currency)}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="empty-state" colSpan={6}>
+                  No listed providers for this resolution yet.
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
       <p className="calculator-note">
-        Estimates use each row&apos;s public per-output-second rate. Taxes,
-        credits, discounts, retries, storage, and transfer fees may change the
-        final bill.
+        Rows are compared only within the selected resolution. Estimates use
+        each row&apos;s public per-output-second rate. Taxes, credits,
+        discounts, retries, storage, and transfer fees may change the final
+        bill.
       </p>
     </section>
   );

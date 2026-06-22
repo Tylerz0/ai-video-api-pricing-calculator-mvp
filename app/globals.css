@@ -36,7 +36,8 @@ a {
 }
 
 button,
-input {
+input,
+select {
   font: inherit;
 }
 
@@ -351,6 +352,13 @@ h1 {
   margin-bottom: 0;
 }
 
+.calculator-copy {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 10px 0 0;
+}
+
 .usage-summary {
   color: var(--muted);
   font-size: 0.82rem;
@@ -361,7 +369,7 @@ h1 {
 .input-grid {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   padding: 0 32px 30px;
 }
 
@@ -373,7 +381,8 @@ h1 {
   gap: 8px;
 }
 
-.input-grid input {
+.input-grid input,
+.input-grid select {
   background: var(--background);
   border: 1px solid var(--line);
   border-radius: 11px;
@@ -386,7 +395,12 @@ h1 {
   width: 100%;
 }
 
-.input-grid input:focus {
+.input-grid select {
+  cursor: pointer;
+}
+
+.input-grid input:focus,
+.input-grid select:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
@@ -461,6 +475,12 @@ tbody td {
 .monthly-cost {
   color: var(--text);
   font-weight: 800;
+}
+
+.empty-state {
+  color: var(--muted);
+  padding: 34px 20px;
+  text-align: center;
 }
 
 .calculator-note {

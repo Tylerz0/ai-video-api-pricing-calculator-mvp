@@ -21,6 +21,7 @@ const displayDate = new Intl.DateTimeFormat("en-US", {
 }).format(new Date(`${pricingData.lastUpdated}T00:00:00Z`));
 
 const defaultComparison = pricingData.pricingRows
+  .filter((row) => row.resolution === "720p")
   .map((row) => ({
     ...row,
     costPerVideo:
@@ -61,7 +62,7 @@ export default function SeedancePricingCalculatorPage() {
         <p>
           Compare public Seedance 2 provider pricing and estimate cost per
           video. The default scenario is 1,000 videos per month at 8 seconds
-          per video.
+          per video. Compare providers at the same selected resolution.
         </p>
         <p className="updated-date">
           Pricing data last updated{" "}
@@ -77,7 +78,7 @@ export default function SeedancePricingCalculatorPage() {
           <div>
             <p className="eyebrow">Default comparison</p>
             <h2 id="default-comparison-title">
-              Seedance 2 cost for 1,000 eight-second videos
+              Seedance 2 720p cost for 1,000 eight-second videos
             </h2>
           </div>
           <p>Server-rendered from local pricing data</p>
@@ -85,8 +86,8 @@ export default function SeedancePricingCalculatorPage() {
         <div className="table-wrap">
           <table className="pricing-table pricing-table-wide">
             <caption className="sr-only">
-              Static Seedance 2 pricing comparison for 1,000 videos at 8
-              seconds each
+              Static Seedance 2 720p pricing comparison for 1,000 videos at 8
+              seconds each, comparing providers at the same resolution
             </caption>
             <thead>
               <tr>
@@ -107,7 +108,7 @@ export default function SeedancePricingCalculatorPage() {
                   <th scope="row">
                     <span>{row.provider}</span>
                     {index === 0 ? (
-                      <small>Lowest listed rate</small>
+                      <small>Lowest listed 720p rate</small>
                     ) : null}
                   </th>
                   <td>
@@ -159,6 +160,9 @@ export default function SeedancePricingCalculatorPage() {
           </table>
         </div>
         <p className="trust-note">
+          The default comparison uses 720p rows only so providers are compared
+          on the same output resolution. Other resolutions may have different
+          pricing and availability.{" "}
           Prices are based on public provider pricing pages as of{" "}
           {pricingData.lastUpdated}. Always verify pricing and availability
           with the provider before production use.
@@ -203,7 +207,7 @@ export default function SeedancePricingCalculatorPage() {
         <details>
           <summary>How much does Seedance 2 cost per 8-second video?</summary>
           <p>
-            In this comparison, an 8-second video ranges from{" "}
+            In the default 720p comparison, an 8-second video ranges from{" "}
             {formatCurrency(cheapestPriceRow.costPerVideo, 5)} for{" "}
             {cheapestPriceRow.provider} {cheapestPriceRow.mode} to{" "}
             {formatCurrency(highestPriceRow.costPerVideo, 4)} for{" "}
@@ -217,10 +221,11 @@ export default function SeedancePricingCalculatorPage() {
           <p>
             {cheapestPriceRow.provider} offers{" "}
             {cheapestPriceRow.modelName} in {cheapestPriceRow.mode} mode at{" "}
-            {cheapestPriceRow.resolution} for the lowest listed rate in this
-            comparison: {formatCurrency(cheapestPriceRow.pricePerSecond)} per
-            output second. OpenRouter and other provider-routed prices should
-            be verified on the linked provider page before production use.
+            {cheapestPriceRow.resolution} for the lowest listed rate in the
+            default 720p comparison:{" "}
+            {formatCurrency(cheapestPriceRow.pricePerSecond)} per output second.
+            OpenRouter and other provider-routed prices should be verified on
+            the linked provider page before production use.
           </p>
         </details>
         <details>
@@ -228,13 +233,12 @@ export default function SeedancePricingCalculatorPage() {
             How much does it cost to generate 1,000 Seedance 2 videos?
           </summary>
           <p>
-            For 1,000 videos at 8 seconds each, the listed estimates range from{" "}
-            {formatCurrency(cheapestPriceRow.monthlyCost, 2)} for{" "}
+            For 1,000 720p videos at 8 seconds each, the listed estimates range
+            from {formatCurrency(cheapestPriceRow.monthlyCost, 2)} for{" "}
             {cheapestPriceRow.provider} {cheapestPriceRow.mode} to{" "}
             {formatCurrency(highestPriceRow.monthlyCost, 2)} for{" "}
-            {highestPriceRow.provider} {highestPriceRow.mode} at{" "}
-            {highestPriceRow.resolution}. The calculator lets you change both
-            volume and duration.
+            {highestPriceRow.provider} {highestPriceRow.mode}. The calculator
+            lets you change volume, duration, and resolution.
           </p>
         </details>
         <details>
