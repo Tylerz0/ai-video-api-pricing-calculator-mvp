@@ -215,11 +215,12 @@ export default function SeedancePricingCalculatorPage() {
         <details>
           <summary>Which Seedance 2 API provider is cheapest?</summary>
           <p>
-            {cheapestPriceRow.provider} {cheapestPriceRow.mode} has the lowest
-            listed rate in this comparison at{" "}
-            {formatCurrency(cheapestPriceRow.pricePerSecond)} per output second.
-            This is OpenRouter Fast at 480p; its Provider specifications list
-            the same rate with or without audio.
+            {cheapestPriceRow.provider} offers{" "}
+            {cheapestPriceRow.modelName} in {cheapestPriceRow.mode} mode at{" "}
+            {cheapestPriceRow.resolution} for the lowest listed rate in this
+            comparison: {formatCurrency(cheapestPriceRow.pricePerSecond)} per
+            output second. OpenRouter and other provider-routed prices should
+            be verified on the linked provider page before production use.
           </p>
         </details>
         <details>
