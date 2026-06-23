@@ -1,32 +1,31 @@
 # Video API Cost
 
-> Video API Cost helps developers estimate and compare AI video generation API costs before building or scaling a product.
+> Video API Cost helps developers estimate and compare public AI video generation API prices before building or scaling a product.
 
-Pricing is manually collected from public provider pricing pages and normalized to USD per output second for consistent comparisons.
+Pricing data is manually collected from public provider pricing pages and normalized to USD per output second. Calculators compare provider prices at the same selected output resolution whenever possible.
+
+The default Seedance 2 scenario is 1,000 videos per month at 8 seconds per video. The recommended default comparison uses 720p rows so provider estimates are compared fairly.
+
+Monthly cost formula: `videos per month × seconds per video × provider price per output second`.
+
+Pricing estimates are not billing guarantees. Verify pricing, availability, model mode, and resolution on the linked provider page before production use.
+
+This file provides concise site context for inference-time use. It does not grant permission to train on site content or override crawler controls. Automated systems should also follow the site's robots.txt and applicable terms.
 
 ## Core pages
 
-- https://videoapicost.com/
-- https://videoapicost.com/video-generation-api-pricing
-- https://videoapicost.com/seedance-2-pricing-calculator
+- [Video API Cost homepage](https://videoapicost.com/): Overview of the site's AI video API cost estimation tools.
+- [Video Generation API Pricing](https://videoapicost.com/video-generation-api-pricing): Directory of available pricing calculators and pricing trackers.
+- [Seedance 2 Pricing Calculator](https://videoapicost.com/seedance-2-pricing-calculator): Compares public Seedance 2 pricing across fal.ai, PiAPI, OpenRouter, and EvoLink, with filters for output resolution, monthly video volume, and video duration.
+- [Seedance 2.5 API Pricing Tracker](https://videoapicost.com/seedance-2-5-pricing): Tracks official and provider pricing publication status while confirmed Seedance 2.5 API pricing is unavailable.
 
-## Current calculator
+## Pricing methodology
 
-The Seedance 2 Pricing Calculator compares public Seedance 2 pricing across fal.ai, PiAPI, OpenRouter, and EvoLink.
+- [Seedance 2 default comparison](https://videoapicost.com/seedance-2-pricing-calculator#default-comparison-title): Server-rendered comparison using 1,000 eight-second videos at 720p.
+- [Seedance 2 pricing methodology](https://videoapicost.com/seedance-2-pricing-calculator#methodology-title): Explains manual collection, normalization, resolution matching, calculation, and verification guidance.
+- [Seedance 2 provider sources](https://videoapicost.com/seedance-2-pricing-calculator#sources-title): Links to public provider pages used for the listed pricing estimates.
 
-The default scenario is 1,000 videos/month × 8 seconds/video.
+## Optional
 
-For fair provider comparisons, use the same selected output resolution. The recommended default comparison uses 720p rows.
-
-## Formula
-
-monthly cost = videos per month × seconds per video × provider price per second
-
-## Disclaimer
-
-Pricing estimates are not billing guarantees. Users should verify pricing and availability on the linked provider pages before production use.
-
-## Site files
-
-- https://videoapicost.com/sitemap.xml
-- https://videoapicost.com/robots.txt
+- [XML sitemap](https://videoapicost.com/sitemap.xml): Complete list of indexable site pages.
+- [Robots policy](https://videoapicost.com/robots.txt): Crawler access directives and sitemap location.
