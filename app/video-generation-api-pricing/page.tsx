@@ -63,6 +63,40 @@ export default function VideoGenerationPricingPage() {
           More calculators may be added after search demand is validated.
         </p>
       </section>
+
+      <section
+        className="directory-section"
+        aria-labelledby="pricing-trackers-title"
+      >
+        <h2 className="section-title" id="pricing-trackers-title">
+          Pricing trackers
+        </h2>
+        <ul className="calculator-directory">
+          <li>
+            <article className="directory-card">
+              <div className="directory-card-content">
+                <div>
+                  <p className="directory-card-label">Model</p>
+                  <h3>Seedance 2.5</h3>
+                </div>
+                <div>
+                  <p className="directory-card-label">Current status</p>
+                  <p className="directory-card-scenario">
+                    Official API pricing not published yet
+                  </p>
+                </div>
+              </div>
+              <Link
+                className="directory-card-link"
+                href="/seedance-2-5-pricing"
+              >
+                Track Seedance 2.5 pricing
+                <span aria-hidden="true">→</span>
+              </Link>
+            </article>
+          </li>
+        </ul>
+      </section>
     </div>
   );
 }

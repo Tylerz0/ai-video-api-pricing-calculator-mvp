@@ -377,6 +377,106 @@ h1 {
   margin: 18px 0 0;
 }
 
+.directory-section {
+  margin-top: 52px;
+}
+
+.tracker-page-heading {
+  margin-bottom: 40px;
+}
+
+.tracker-table {
+  max-width: 980px;
+}
+
+.tracker-table table {
+  min-width: 760px;
+}
+
+.tracker-table th,
+.tracker-table td {
+  text-align: left;
+  vertical-align: top;
+}
+
+.tracker-table th:first-child {
+  min-width: 180px;
+}
+
+.tracker-table td:nth-child(2) {
+  min-width: 205px;
+}
+
+.status-badge {
+  background: var(--accent-soft);
+  border-radius: 999px;
+  color: var(--accent-dark);
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 750;
+  line-height: 1.35;
+  padding: 7px 10px;
+}
+
+.version-comparison {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 24px;
+}
+
+.version-comparison article {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.version-comparison h3 {
+  font-size: 1.2rem;
+  letter-spacing: -0.025em;
+  margin-bottom: 10px;
+}
+
+.version-comparison article > p:not(.directory-card-label) {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.version-comparison .text-link {
+  margin-top: 6px;
+}
+
+.update-cta {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  margin-top: 62px;
+  max-width: 920px;
+  padding: 28px 30px;
+}
+
+.update-cta h2 {
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 10px;
+}
+
+.update-cta p:not(.eyebrow) {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 0;
+  max-width: 600px;
+}
+
+.update-cta .button {
+  flex: 0 0 auto;
+}
+
 .calculator-card {
   align-items: center;
   background: var(--surface);
@@ -836,6 +936,22 @@ tbody td {
     border-top: 1px solid var(--line);
     justify-content: space-between;
     padding: 16px 0 0;
+    width: 100%;
+  }
+
+  .version-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .update-cta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 22px;
+    padding: 24px 20px;
+  }
+
+  .update-cta .button {
+    justify-content: space-between;
     width: 100%;
   }
 

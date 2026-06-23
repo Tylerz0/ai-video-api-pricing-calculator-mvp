@@ -58,6 +58,25 @@ export default function HomePage() {
           <span aria-hidden="true">→</span>
         </Link>
       </section>
+
+      <section
+        className="home-section supported-calculator"
+        aria-labelledby="seedance-2-5-tracker-title"
+      >
+        <div>
+          <p className="eyebrow">Pricing watch</p>
+          <h2 id="seedance-2-5-tracker-title">Seedance 2.5 pricing tracker</h2>
+          <p>
+            Official Seedance 2.5 API pricing is not published yet. Follow
+            release and provider pricing updates as confirmed rates become
+            available.
+          </p>
+        </div>
+        <Link className="text-link" href="/seedance-2-5-pricing">
+          Track Seedance 2.5 pricing
+          <span aria-hidden="true">→</span>
+        </Link>
+      </section>
     </div>
   );
 }
