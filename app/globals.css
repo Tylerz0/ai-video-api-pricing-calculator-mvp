@@ -290,7 +290,6 @@ h1 {
   margin-bottom: 2px;
 }
 
-.hub-table-wrap,
 .static-comparison {
   background: var(--surface);
   border: 1px solid var(--line);
@@ -298,21 +297,78 @@ h1 {
   overflow: hidden;
 }
 
-.hub-table-wrap {
+.calculator-directory {
+  list-style: none;
+  margin: 0;
   max-width: 900px;
+  padding: 0;
 }
 
-.hub-table {
-  min-width: 700px;
+.directory-card {
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  padding: 26px 28px;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
-.hub-table th,
-.hub-table td {
-  text-align: left;
+.directory-card:hover {
+  border-color: #adb5a8;
+  box-shadow: var(--shadow);
 }
 
-.hub-table tbody th {
-  color: var(--text);
+.directory-card-content {
+  align-items: center;
+  display: grid;
+  gap: 28px;
+  grid-template-columns: minmax(150px, 0.6fr) minmax(240px, 1fr);
+  min-width: 0;
+}
+
+.directory-card-label {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 7px;
+  text-transform: uppercase;
+}
+
+.directory-card h3 {
+  font-size: 1.28rem;
+  letter-spacing: -0.025em;
+  margin-bottom: 0;
+}
+
+.directory-card-scenario {
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.directory-card-link {
+  align-items: center;
+  color: var(--accent);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.9rem;
+  font-weight: 800;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 0;
+  text-decoration: none;
+}
+
+.directory-card-link:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .hub-note {
@@ -761,6 +817,26 @@ tbody td {
 
   .supported-calculator {
     gap: 18px;
+  }
+
+  .directory-card {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px 20px;
+  }
+
+  .directory-card-content {
+    align-items: start;
+    gap: 18px;
+    grid-template-columns: 1fr;
+  }
+
+  .directory-card-link {
+    border-top: 1px solid var(--line);
+    justify-content: space-between;
+    padding: 16px 0 0;
+    width: 100%;
   }
 
   .section-heading {

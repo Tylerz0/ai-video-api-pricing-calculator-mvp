@@ -34,32 +34,31 @@ export default function VideoGenerationPricingPage() {
         <h2 className="section-title" id="calculators-title">
           Available calculators
         </h2>
-        <div className="hub-table-wrap">
-          <table className="hub-table">
-            <thead>
-              <tr>
-                <th scope="col">Model</th>
-                <th scope="col">Default scenario</th>
-                <th scope="col">Calculator</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">Seedance 2</th>
-                <td>1,000 videos/month × 8 seconds/video</td>
-                <td>
-                  <Link
-                    className="text-link"
-                    href="/seedance-2-pricing-calculator"
-                  >
-                    Compare Seedance 2 pricing
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <ul className="calculator-directory">
+          <li>
+            <article className="directory-card">
+              <div className="directory-card-content">
+                <div>
+                  <p className="directory-card-label">Model</p>
+                  <h3>Seedance 2</h3>
+                </div>
+                <div>
+                  <p className="directory-card-label">Default scenario</p>
+                  <p className="directory-card-scenario">
+                    1,000 videos/month × 8 seconds/video
+                  </p>
+                </div>
+              </div>
+              <Link
+                className="directory-card-link"
+                href="/seedance-2-pricing-calculator"
+              >
+                Compare Seedance 2 pricing
+                <span aria-hidden="true">→</span>
+              </Link>
+            </article>
+          </li>
+        </ul>
         <p className="hub-note">
           More calculators may be added after search demand is validated.
         </p>
