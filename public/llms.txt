@@ -16,7 +16,7 @@ This file provides concise site context for inference-time use. It does not gran
 
 - [Video API Cost homepage](https://videoapicost.com/): Overview of the site's AI video API cost estimation tools.
 - [Video Generation API Pricing](https://videoapicost.com/video-generation-api-pricing): Directory of available pricing calculators and pricing trackers.
-- [Seedance 2 Pricing Calculator](https://videoapicost.com/seedance-2-pricing-calculator): Compares public Seedance 2 pricing across fal.ai, PiAPI, OpenRouter, and EvoLink, with filters for output resolution, monthly video volume, and video duration.
+- [Seedance 2 Pricing Calculator](https://videoapicost.com/seedance-2-pricing-calculator): Compares BytePlus official Seedance 2 estimates with public pricing across fal.ai, PiAPI, OpenRouter, EvoLink, and Kie.ai, with filters for output resolution, monthly video volume, and video duration.
 - [Seedance 2.5 API Pricing Tracker](https://videoapicost.com/seedance-2-5-pricing): Tracks official and provider pricing publication status while confirmed Seedance 2.5 API pricing is unavailable.
 
 ## Pricing methodology

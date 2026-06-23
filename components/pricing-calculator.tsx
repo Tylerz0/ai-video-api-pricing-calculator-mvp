@@ -2,19 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-type PricingRow = {
-  provider: string;
-  modelName: string;
-  mode: string;
-  resolution: string;
-  pricePerSecond: number;
-  billingUnit: string;
-  audioPricing?: string;
-  videoTokenPricePerMillion?: number;
-  sourceLabel: string;
-  sourceUrl: string;
-  note: string;
-};
+import type { PricingRow } from "@/lib/pricing";
 
 type PricingCalculatorProps = {
   currency: string;
@@ -208,6 +196,9 @@ export function PricingCalculator({
                     <span className="table-primary">
                       {formatCurrency(row.pricePerSecond, currency)}
                     </span>
+                    <small className="table-secondary">
+                      {row.billingUnit}
+                    </small>
                     {row.videoTokenPricePerMillion !== undefined ? (
                       <small className="table-secondary">
                         {formatCurrency(

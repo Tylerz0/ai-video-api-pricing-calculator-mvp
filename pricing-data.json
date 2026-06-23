@@ -1,6 +1,6 @@
 {
   "model": "Seedance 2",
-  "lastUpdated": "2026-06-22",
+  "lastUpdated": "2026-06-23",
   "currency": "USD",
   "defaultInputs": {
     "videosPerMonth": 1000,
@@ -8,26 +8,120 @@
   },
   "pricingRows": [
     {
+      "provider": "BytePlus (official)",
+      "modelName": "Dreamina Seedance 2.0",
+      "mode": "Standard · No video input · 16:9 estimate",
+      "resolution": "480p",
+      "pricePerSecond": 0.07,
+      "billingUnit": "estimated per output second",
+      "videoTokenPricePerMillion": 7,
+      "sourceLabel": "BytePlus ModelArk pricing",
+      "sourceUrl": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+      "note": "Normalized from BytePlus's official 5-second, 16:9, no-video-input example: $0.35 per video. Actual billing uses token consumption."
+    },
+    {
+      "provider": "BytePlus (official)",
+      "modelName": "Dreamina Seedance 2.0",
+      "mode": "Standard · No video input · 16:9 estimate",
+      "resolution": "720p",
+      "pricePerSecond": 0.152,
+      "billingUnit": "estimated per output second",
+      "videoTokenPricePerMillion": 7,
+      "sourceLabel": "BytePlus ModelArk pricing",
+      "sourceUrl": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+      "note": "Normalized from BytePlus's official 5-second, 16:9, no-video-input example: $0.76 per video. Actual billing uses token consumption."
+    },
+    {
+      "provider": "BytePlus (official)",
+      "modelName": "Dreamina Seedance 2.0",
+      "mode": "Standard · No video input · 16:9 estimate",
+      "resolution": "1080p",
+      "pricePerSecond": 0.374,
+      "billingUnit": "estimated per output second",
+      "videoTokenPricePerMillion": 7.7,
+      "sourceLabel": "BytePlus ModelArk pricing",
+      "sourceUrl": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+      "note": "Normalized from BytePlus's official 5-second, 16:9, no-video-input example: $1.87 per video. Actual billing uses token consumption."
+    },
+    {
+      "provider": "BytePlus (official)",
+      "modelName": "Dreamina Seedance 2.0",
+      "mode": "Standard · No video input · 16:9 estimate",
+      "resolution": "4K",
+      "pricePerSecond": 0.778,
+      "billingUnit": "estimated per output second",
+      "videoTokenPricePerMillion": 4,
+      "sourceLabel": "BytePlus ModelArk pricing",
+      "sourceUrl": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+      "note": "Normalized from BytePlus's official 5-second, 16:9, no-video-input example: $3.89 per video. Actual billing uses token consumption."
+    },
+    {
+      "provider": "BytePlus (official)",
+      "modelName": "Dreamina Seedance 2.0 Fast",
+      "mode": "Fast · No video input · 16:9 estimate",
+      "resolution": "480p",
+      "pricePerSecond": 0.056,
+      "billingUnit": "estimated per output second",
+      "videoTokenPricePerMillion": 5.6,
+      "sourceLabel": "BytePlus ModelArk pricing",
+      "sourceUrl": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+      "note": "Normalized from BytePlus's official 5-second, 16:9, no-video-input example: $0.28 per video. Actual billing uses token consumption."
+    },
+    {
+      "provider": "BytePlus (official)",
+      "modelName": "Dreamina Seedance 2.0 Fast",
+      "mode": "Fast · No video input · 16:9 estimate",
+      "resolution": "720p",
+      "pricePerSecond": 0.12,
+      "billingUnit": "estimated per output second",
+      "videoTokenPricePerMillion": 5.6,
+      "sourceLabel": "BytePlus ModelArk pricing",
+      "sourceUrl": "https://docs.byteplus.com/en/docs/ModelArk/1544106",
+      "note": "Normalized from BytePlus's official 5-second, 16:9, no-video-input example: $0.60 per video. Actual billing uses token consumption."
+    },
+    {
       "provider": "fal.ai",
       "modelName": "Seedance 2.0",
-      "mode": "Standard",
+      "mode": "Standard · Text-to-video",
       "resolution": "720p",
       "pricePerSecond": 0.3034,
       "billingUnit": "per output second",
       "sourceLabel": "fal.ai Seedance 2.0 guide",
       "sourceUrl": "https://fal.ai/learn/tools/how-to-use-seedance-2-0",
-      "note": "Public listed 720p standard rate."
+      "note": "Public 720p text-to-video rate. fal.ai does not offer Seedance 2.0 at 1080p or 4K."
+    },
+    {
+      "provider": "fal.ai",
+      "modelName": "Seedance 2.0",
+      "mode": "Standard · Image/reference-to-video",
+      "resolution": "720p",
+      "pricePerSecond": 0.3024,
+      "billingUnit": "per output second",
+      "sourceLabel": "fal.ai Seedance 2.0 guide",
+      "sourceUrl": "https://fal.ai/learn/tools/how-to-use-seedance-2-0",
+      "note": "Public 720p image-to-video and reference-to-video rate."
     },
     {
       "provider": "fal.ai",
       "modelName": "Seedance 2.0 Fast",
-      "mode": "Fast",
+      "mode": "Fast · All listed endpoints",
       "resolution": "720p",
       "pricePerSecond": 0.2419,
       "billingUnit": "per output second",
       "sourceLabel": "fal.ai Seedance 2.0 guide",
       "sourceUrl": "https://fal.ai/learn/tools/how-to-use-seedance-2-0",
-      "note": "Public listed 720p fast rate."
+      "note": "Public 720p text, image, and reference-to-video rate; audio is included."
+    },
+    {
+      "provider": "PiAPI",
+      "modelName": "seedance-2",
+      "mode": "Pro",
+      "resolution": "480p",
+      "pricePerSecond": 0.1,
+      "billingUnit": "per output second",
+      "sourceLabel": "PiAPI Seedance 2 docs",
+      "sourceUrl": "https://piapi.ai/docs/seedance-api/seedance-2",
+      "note": "Public listed 480p pro rate."
     },
     {
       "provider": "PiAPI",
@@ -39,6 +133,28 @@
       "sourceLabel": "PiAPI Seedance 2 docs",
       "sourceUrl": "https://piapi.ai/docs/seedance-api/seedance-2",
       "note": "Public listed 720p pro rate."
+    },
+    {
+      "provider": "PiAPI",
+      "modelName": "seedance-2",
+      "mode": "Pro",
+      "resolution": "1080p",
+      "pricePerSecond": 0.5,
+      "billingUnit": "per output second",
+      "sourceLabel": "PiAPI Seedance 2 docs",
+      "sourceUrl": "https://piapi.ai/docs/seedance-api/seedance-2",
+      "note": "Public listed 1080p pro rate."
+    },
+    {
+      "provider": "PiAPI",
+      "modelName": "seedance-2-fast",
+      "mode": "Fast",
+      "resolution": "480p",
+      "pricePerSecond": 0.08,
+      "billingUnit": "per output second",
+      "sourceLabel": "PiAPI Seedance 2 docs",
+      "sourceUrl": "https://piapi.ai/docs/seedance-api/seedance-2",
+      "note": "Public listed 480p fast rate; Fast does not support 1080p."
     },
     {
       "provider": "PiAPI",
@@ -67,13 +183,13 @@
       "modelName": "bytedance/seedance-2.0",
       "mode": "Standard",
       "resolution": "480p",
-      "pricePerSecond": 0.06726,
+      "pricePerSecond": 0.067256,
       "billingUnit": "per output second",
       "audioPricing": "same with or without audio",
       "videoTokenPricePerMillion": 7,
       "sourceLabel": "OpenRouter Seedance 2.0",
       "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0#providers",
-      "note": "480p is $0.06726/sec with or without audio; video tokens are $7.00/M."
+      "note": "480p is $0.067256/sec with or without audio; OpenRouter displays the rate rounded to $0.06726. Video tokens are $7.00/M."
     },
     {
       "provider": "OpenRouter",
@@ -106,39 +222,50 @@
       "modelName": "bytedance/seedance-2.0-fast",
       "mode": "Fast",
       "resolution": "480p",
-      "pricePerSecond": 0.0538,
+      "pricePerSecond": 0.0538048,
       "billingUnit": "per output second",
       "audioPricing": "same with or without audio",
       "videoTokenPricePerMillion": 5.6,
       "sourceLabel": "OpenRouter Seedance 2.0 Fast",
       "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0-fast#providers",
-      "note": "480p is $0.0538/sec with or without audio; video tokens are $5.60/M."
+      "note": "480p is $0.0538048/sec with or without audio; OpenRouter displays the rate rounded to $0.0538. Video tokens are $5.60/M."
     },
     {
       "provider": "OpenRouter",
       "modelName": "bytedance/seedance-2.0-fast",
       "mode": "Fast",
       "resolution": "720p",
-      "pricePerSecond": 0.121,
+      "pricePerSecond": 0.12096,
       "billingUnit": "per output second",
       "audioPricing": "same with or without audio",
       "videoTokenPricePerMillion": 5.6,
       "sourceLabel": "OpenRouter Seedance 2.0 Fast",
       "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0-fast#providers",
-      "note": "720p is $0.121/sec with or without audio; video tokens are $5.60/M."
+      "note": "720p is $0.12096/sec with or without audio; OpenRouter displays the rate rounded to $0.121. Video tokens are $5.60/M."
     },
     {
       "provider": "OpenRouter",
       "modelName": "bytedance/seedance-2.0-fast",
       "mode": "Fast",
       "resolution": "1080p",
-      "pricePerSecond": 0.2722,
+      "pricePerSecond": 0.27216,
       "billingUnit": "per output second",
       "audioPricing": "same with or without audio",
       "videoTokenPricePerMillion": 5.6,
       "sourceLabel": "OpenRouter Seedance 2.0 Fast",
       "sourceUrl": "https://openrouter.ai/bytedance/seedance-2.0-fast#providers",
-      "note": "1080p is $0.2722/sec with or without audio; video tokens are $5.60/M."
+      "note": "1080p is $0.27216/sec with or without audio; OpenRouter displays the rate rounded to $0.2722. Video tokens are $5.60/M."
+    },
+    {
+      "provider": "EvoLink",
+      "modelName": "Seedance 2.0",
+      "mode": "Standard",
+      "resolution": "480p",
+      "pricePerSecond": 0.092,
+      "billingUnit": "per output second",
+      "sourceLabel": "EvoLink Seedance 2.0",
+      "sourceUrl": "https://evolink.ai/seedance-2-0",
+      "note": "Public Pricing table rate for 480p."
     },
     {
       "provider": "EvoLink",
@@ -149,7 +276,106 @@
       "billingUnit": "per output second",
       "sourceLabel": "EvoLink Seedance 2.0",
       "sourceUrl": "https://evolink.ai/seedance-2-0",
-      "note": "Public listed 720p standard route."
+      "note": "Public Pricing table rate for 720p."
+    },
+    {
+      "provider": "EvoLink",
+      "modelName": "Seedance 2.0",
+      "mode": "Standard",
+      "resolution": "1080p",
+      "pricePerSecond": 0.496,
+      "billingUnit": "per output second",
+      "sourceLabel": "EvoLink Seedance 2.0",
+      "sourceUrl": "https://evolink.ai/seedance-2-0",
+      "note": "Public Pricing table rate for 1080p."
+    },
+    {
+      "provider": "Kie.ai",
+      "modelName": "bytedance/seedance-2-mini",
+      "mode": "Mini · No video input",
+      "resolution": "480p",
+      "pricePerSecond": 0.0475,
+      "billingUnit": "per output second",
+      "sourceLabel": "Kie.ai Seedance pricing",
+      "sourceUrl": "https://kie.ai?ref=26c0c5e8bbc17cbee16bf9784694c9c8",
+      "note": "Kie.ai rate without video input; total cost uses output duration."
+    },
+    {
+      "provider": "Kie.ai",
+      "modelName": "bytedance/seedance-2-mini",
+      "mode": "Mini · No video input",
+      "resolution": "720p",
+      "pricePerSecond": 0.1025,
+      "billingUnit": "per output second",
+      "sourceLabel": "Kie.ai Seedance pricing",
+      "sourceUrl": "https://kie.ai?ref=26c0c5e8bbc17cbee16bf9784694c9c8",
+      "note": "Kie.ai rate without video input; total cost uses output duration."
+    },
+    {
+      "provider": "Kie.ai",
+      "modelName": "bytedance/seedance-2 fast",
+      "mode": "Fast · No video input",
+      "resolution": "480p",
+      "pricePerSecond": 0.0775,
+      "billingUnit": "per output second",
+      "sourceLabel": "Kie.ai Seedance pricing",
+      "sourceUrl": "https://kie.ai?ref=26c0c5e8bbc17cbee16bf9784694c9c8",
+      "note": "Kie.ai rate without video input; total cost uses output duration."
+    },
+    {
+      "provider": "Kie.ai",
+      "modelName": "bytedance/seedance-2 fast",
+      "mode": "Fast · No video input",
+      "resolution": "720p",
+      "pricePerSecond": 0.165,
+      "billingUnit": "per output second",
+      "sourceLabel": "Kie.ai Seedance pricing",
+      "sourceUrl": "https://kie.ai?ref=26c0c5e8bbc17cbee16bf9784694c9c8",
+      "note": "Kie.ai rate without video input; total cost uses output duration."
+    },
+    {
+      "provider": "Kie.ai",
+      "modelName": "bytedance/seedance-2",
+      "mode": "Standard · No video input",
+      "resolution": "480p",
+      "pricePerSecond": 0.095,
+      "billingUnit": "per output second",
+      "sourceLabel": "Kie.ai Seedance pricing",
+      "sourceUrl": "https://kie.ai?ref=26c0c5e8bbc17cbee16bf9784694c9c8",
+      "note": "Kie.ai rate without video input; total cost uses output duration."
+    },
+    {
+      "provider": "Kie.ai",
+      "modelName": "bytedance/seedance-2",
+      "mode": "Standard · No video input",
+      "resolution": "720p",
+      "pricePerSecond": 0.205,
+      "billingUnit": "per output second",
+      "sourceLabel": "Kie.ai Seedance pricing",
+      "sourceUrl": "https://kie.ai?ref=26c0c5e8bbc17cbee16bf9784694c9c8",
+      "note": "Kie.ai rate without video input; total cost uses output duration."
+    },
+    {
+      "provider": "Kie.ai",
+      "modelName": "bytedance/seedance-2",
+      "mode": "Standard · No video input",
+      "resolution": "1080p",
+      "pricePerSecond": 0.51,
+      "billingUnit": "per output second",
+      "sourceLabel": "Kie.ai Seedance pricing",
+      "sourceUrl": "https://kie.ai?ref=26c0c5e8bbc17cbee16bf9784694c9c8",
+      "note": "Kie.ai rate without video input; total cost uses output duration."
+    },
+    {
+      "provider": "Kie.ai",
+      "modelName": "bytedance/seedance-2",
+      "mode": "Standard · No video input",
+      "resolution": "4K",
+      "pricePerSecond": 1.04,
+      "billingUnit": "per output second",
+      "sourceLabel": "Kie.ai Seedance pricing",
+      "sourceUrl": "https://kie.ai?ref=26c0c5e8bbc17cbee16bf9784694c9c8",
+      "note": "Kie.ai rate without video input; total cost uses output duration."
     }
   ]
 }

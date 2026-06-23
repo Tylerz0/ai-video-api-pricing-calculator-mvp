@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { PricingCalculator } from "@/components/pricing-calculator";
+import type { PricingRow } from "@/lib/pricing";
 import { siteConfig } from "@/lib/site";
 import pricingData from "@/pricing-data.json";
 
@@ -10,7 +11,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "Seedance 2 Pricing Calculator: Cost per Video Across API Providers",
   description:
-    "Calculate Seedance 2 API cost per video and compare public pricing across fal.ai, PiAPI, OpenRouter and EvoLink.",
+    "Calculate Seedance 2 API cost per video and compare BytePlus official estimates with fal.ai, PiAPI, OpenRouter, EvoLink and Kie.ai.",
   alternates: {
     canonical: "/seedance-2-pricing-calculator",
   },
@@ -21,7 +22,9 @@ const displayDate = new Intl.DateTimeFormat("en-US", {
   timeZone: "UTC",
 }).format(new Date(`${pricingData.lastUpdated}T00:00:00Z`));
 
-const defaultComparison = pricingData.pricingRows
+const pricingRows = pricingData.pricingRows as PricingRow[];
+
+const defaultComparison = pricingRows
   .filter((row) => row.resolution === "720p")
   .map((row) => ({
     ...row,
@@ -38,6 +41,23 @@ const cheapestPriceRow = defaultComparison[0];
 const highestPriceRow = defaultComparison[defaultComparison.length - 1];
 const siteUrl = siteConfig.url.replace(/\/$/, "");
 const pageUrl = `${siteUrl}/seedance-2-pricing-calculator`;
+const isKieSource = (row: PricingRow) =>
+  new URL(row.sourceUrl).hostname === "kie.ai";
+
+function getPrice(
+  provider: string,
+  modelName: string,
+  resolution: string,
+  modeIncludes?: string,
+) {
+  return pricingRows.find(
+    (row) =>
+      row.provider === provider &&
+      row.modelName === modelName &&
+      row.resolution === resolution &&
+      (modeIncludes ? row.mode.includes(modeIncludes) : true),
+  )?.pricePerSecond;
+}
 
 function formatCurrency(value: number, maximumFractionDigits = 4) {
   return new Intl.NumberFormat("en-US", {
@@ -63,7 +83,7 @@ const faqItems = [
   },
   {
     question: "Is Seedance 2 Fast cheaper than standard Seedance 2?",
-    answer: `Yes in the listed same-provider comparisons. fal.ai Fast is ${formatCurrency(0.2419)} per second versus ${formatCurrency(0.3034)} for Standard, while PiAPI Fast is ${formatCurrency(0.16)} versus ${formatCurrency(0.2)} for Pro at 720p. On OpenRouter, Fast versus Standard is ${formatCurrency(0.0538)} versus ${formatCurrency(0.06726)} at 480p, ${formatCurrency(0.121)} versus ${formatCurrency(0.1512)} at 720p, and ${formatCurrency(0.2722)} versus ${formatCurrency(0.3402)} at 1080p.`,
+    answer: `Yes in the current listed same-provider 720p comparisons. The BytePlus official 16:9 examples normalize to about ${formatCurrency(getPrice("BytePlus (official)", "Dreamina Seedance 2.0 Fast", "720p")!)} per output second for Fast versus ${formatCurrency(getPrice("BytePlus (official)", "Dreamina Seedance 2.0", "720p")!)} for Standard. fal.ai Fast is ${formatCurrency(getPrice("fal.ai", "Seedance 2.0 Fast", "720p")!)} versus ${formatCurrency(getPrice("fal.ai", "Seedance 2.0", "720p", "Text-to-video")!)} for Standard text-to-video. PiAPI Fast is ${formatCurrency(getPrice("PiAPI", "seedance-2-fast", "720p")!)} versus ${formatCurrency(getPrice("PiAPI", "seedance-2", "720p")!)} for Pro. Kie.ai Fast without video input is ${formatCurrency(getPrice("Kie.ai", "bytedance/seedance-2 fast", "720p")!)} versus ${formatCurrency(getPrice("Kie.ai", "bytedance/seedance-2", "720p")!)} for Standard. OpenRouter Fast is ${formatCurrency(getPrice("OpenRouter", "bytedance/seedance-2.0-fast", "720p")!)} versus ${formatCurrency(getPrice("OpenRouter", "bytedance/seedance-2.0", "720p")!)} for Standard.`,
   },
 ];
 
@@ -111,7 +131,7 @@ const structuredData = {
       measurementTechnique:
         "Manual collection from linked public provider pricing pages, normalization to USD per output second, and comparison within the same output resolution.",
       isBasedOn: Array.from(
-        new Set(pricingData.pricingRows.map((row) => row.sourceUrl)),
+        new Set(pricingRows.map((row) => row.sourceUrl)),
       ),
     },
     {
@@ -303,7 +323,11 @@ export default function SeedancePricingCalculatorPage() {
                   <td className="source-cell">
                     <a
                       href={row.sourceUrl}
-                      rel="noreferrer"
+                      rel={
+                        isKieSource(row)
+                          ? "sponsored noreferrer"
+                          : "noreferrer"
+                      }
                       target="_blank"
                     >
                       {row.sourceLabel}
@@ -332,10 +356,13 @@ export default function SeedancePricingCalculatorPage() {
         currency={pricingData.currency}
         defaultSecondsPerVideo={pricingData.defaultInputs.secondsPerVideo}
         defaultVideosPerMonth={pricingData.defaultInputs.videosPerMonth}
-        pricingRows={pricingData.pricingRows}
+        pricingRows={pricingRows}
       />
 
-      <section className="content-section methodology" aria-labelledby="methodology-title">
+      <section
+        className="content-section methodology"
+        aria-labelledby="methodology-title"
+      >
         <h2 id="methodology-title">Methodology</h2>
         <p>
           This calculator uses a small, manually maintained dataset designed
@@ -353,7 +380,8 @@ export default function SeedancePricingCalculatorPage() {
           <li>
             <strong>Fair comparison:</strong> Providers are compared only
             within the selected output resolution; the server-rendered default
-            uses 720p.
+            uses 720p. Kie.ai and BytePlus official rows use no-video-input
+            scenarios.
           </li>
           <li>
             <strong>Calculation:</strong> Monthly cost equals videos per month ×
@@ -363,6 +391,21 @@ export default function SeedancePricingCalculatorPage() {
             <strong>Exclusions:</strong> Estimates do not include taxes,
             credits, volume discounts, retries, storage, transfer fees, or
             provider-specific account terms.
+          </li>
+          <li>
+            <strong>BytePlus official pricing:</strong> BytePlus bills by video
+            tokens. Its rows are normalized from the official 5-second, 16:9,
+            no-video-input examples by dividing the listed per-video estimate
+            by five. Actual charges depend on token consumption returned by the
+            API.
+          </li>
+          <li>
+            <strong>BytePlus Mini availability:</strong> BytePlus publishes
+            pricing examples for Dreamina Seedance 2.0 Mini, but its official
+            tutorial states that Mini is currently limited to Model Playground
+            trial use and API access is expected on June 25, 2026 (UTC+8).
+            Therefore it is excluded from the provider ranking as of{" "}
+            {displayDate}.
           </li>
         </ul>
         <p>
@@ -379,14 +422,24 @@ export default function SeedancePricingCalculatorPage() {
           scenarios are comparable; provider-specific model modes and billing
           details are identified in the table.
         </p>
+        <p>
+          Kie.ai outbound links use a referral URL. This does not change the
+          listed prices, calculations, or ranking methodology.
+        </p>
         <ul className="source-list">
           {Array.from(
             new Map(
-              pricingData.pricingRows.map((row) => [row.sourceUrl, row]),
+              pricingRows.map((row) => [row.sourceUrl, row]),
             ).values(),
           ).map((row) => (
             <li key={row.sourceUrl}>
-              <a href={row.sourceUrl} rel="noreferrer" target="_blank">
+              <a
+                href={row.sourceUrl}
+                rel={
+                  isKieSource(row) ? "sponsored noreferrer" : "noreferrer"
+                }
+                target="_blank"
+              >
                 {row.sourceLabel}
                 <span className="external-mark" aria-hidden="true">
                   ↗

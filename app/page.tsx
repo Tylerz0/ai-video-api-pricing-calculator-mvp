@@ -49,8 +49,8 @@ export default function HomePage() {
           </h2>
           <p>
             The Seedance 2 Pricing Calculator compares public rates across
-            fal.ai, PiAPI, OpenRouter, and EvoLink. Its default scenario is
-            1,000 videos per month at 8 seconds per video.
+            BytePlus, fal.ai, PiAPI, OpenRouter, EvoLink, and Kie.ai. Its
+            default scenario is 1,000 videos per month at 8 seconds per video.
           </p>
         </div>
         <Link className="text-link" href="/seedance-2-pricing-calculator">
