@@ -129,6 +129,7 @@ const structuredData = {
         "Public Seedance 2 provider pricing manually collected from linked provider pages and normalized to USD per output second where possible. Provider ranking is price-only for the selected resolution, and referral links do not affect calculations or ranking.",
       url: pageUrl,
       dateModified: pricingData.lastUpdated,
+      license: `${siteUrl}/seedance-2-pricing-calculator`,
       creator: {
         "@type": "Organization",
         name: "Video API Cost",
