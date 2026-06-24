@@ -10,6 +10,8 @@ Monthly cost formula: `videos per month × seconds per video × provider price p
 
 Pricing estimates are not billing guarantees. Verify pricing, availability, model mode, and resolution on the linked provider page before production use.
 
+Provider rankings are price-only comparisons based on the selected resolution. Referral links, where used, do not affect pricing data, calculations, or ranking.
+
 This file provides concise site context for inference-time use. It does not grant permission to train on site content or override crawler controls. Automated systems should also follow the site's robots.txt and applicable terms.
 
 ## Core pages

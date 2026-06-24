@@ -3,17 +3,33 @@ import Link from "next/link";
 
 import { PricingCalculator } from "@/components/pricing-calculator";
 import type { PricingRow } from "@/lib/pricing";
-import { siteConfig } from "@/lib/site";
 import pricingData from "@/pricing-data.json";
 
 export const dynamic = "force-static";
 
+const pageTitle = "Seedance 2 API Pricing Calculator | Video API Cost";
+const pageDescription =
+  "Estimate Seedance 2 API cost per video and monthly spend at 720p. Compare public provider rates by resolution, duration, and video volume.";
+const siteUrl = "https://videoapicost.com";
+const pageUrl = `${siteUrl}/seedance-2-pricing-calculator`;
+
 export const metadata: Metadata = {
-  title: "Seedance 2 Pricing Calculator: Cost per Video Across API Providers",
-  description:
-    "Calculate Seedance 2 API cost per video and compare BytePlus official estimates with fal.ai, PiAPI, OpenRouter, EvoLink and Kie.ai.",
+  title: pageTitle,
+  description: pageDescription,
   alternates: {
-    canonical: "/seedance-2-pricing-calculator",
+    canonical: pageUrl,
+  },
+  openGraph: {
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl,
+    siteName: "Video API Cost",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: pageTitle,
+    description: pageDescription,
   },
 };
 
@@ -39,8 +55,6 @@ const defaultComparison = pricingRows
 
 const cheapestPriceRow = defaultComparison[0];
 const highestPriceRow = defaultComparison[defaultComparison.length - 1];
-const siteUrl = siteConfig.url.replace(/\/$/, "");
-const pageUrl = `${siteUrl}/seedance-2-pricing-calculator`;
 const isKieSource = (row: PricingRow) =>
   new URL(row.sourceUrl).hostname === "kie.ai";
 
@@ -74,8 +88,8 @@ const faqItems = [
     answer: `In the default 720p comparison, an 8-second video ranges from ${formatCurrency(cheapestPriceRow.costPerVideo, 5)} for ${cheapestPriceRow.provider} ${cheapestPriceRow.mode} to ${formatCurrency(highestPriceRow.costPerVideo, 4)} for ${highestPriceRow.provider} ${highestPriceRow.mode}. Final pricing depends on the provider, model mode, resolution, and settings.`,
   },
   {
-    question: "Which Seedance 2 API provider is cheapest?",
-    answer: `${cheapestPriceRow.provider} offers ${cheapestPriceRow.modelName} in ${cheapestPriceRow.mode} mode at ${cheapestPriceRow.resolution} for the lowest listed rate in the default 720p comparison: ${formatCurrency(cheapestPriceRow.pricePerSecond)} per output second. OpenRouter and other provider-routed prices should be verified on the linked provider page before production use.`,
+    question: "Which Seedance 2 provider has the lowest listed 720p rate?",
+    answer: `In the current listed 720p comparison, the lowest listed rate is ${cheapestPriceRow.provider} ${cheapestPriceRow.modelName} ${cheapestPriceRow.mode} at ${formatCurrency(cheapestPriceRow.pricePerSecond)} per output second. This is a price-only comparison, not a provider recommendation. Referral links, where used, do not affect pricing data, calculations, or ranking.`,
   },
   {
     question: "How much does it cost to generate 1,000 Seedance 2 videos?",
@@ -95,7 +109,7 @@ const structuredData = {
       "@id": `${pageUrl}#software-application`,
       name: "Seedance 2 API Pricing Calculator",
       description:
-        "A web calculator for estimating Seedance 2 API cost per video and comparing public provider rates at the same output resolution.",
+        "A neutral calculator for estimating Seedance 2 API cost per video and comparing public provider rates by selected resolution. Provider ranking is price-only and referral links do not affect pricing data, calculations, or ranking.",
       url: pageUrl,
       applicationCategory: "DeveloperApplication",
       operatingSystem: "Any",
@@ -112,7 +126,7 @@ const structuredData = {
       "@id": `${pageUrl}#dataset`,
       name: "Seedance 2 public API pricing comparison",
       description:
-        "Public Seedance 2 provider pricing manually collected from linked provider pages and normalized to USD per output second.",
+        "Public Seedance 2 provider pricing manually collected from linked provider pages and normalized to USD per output second where possible. Provider ranking is price-only for the selected resolution, and referral links do not affect calculations or ranking.",
       url: pageUrl,
       dateModified: pricingData.lastUpdated,
       creator: {
@@ -325,7 +339,7 @@ export default function SeedancePricingCalculatorPage() {
                       href={row.sourceUrl}
                       rel={
                         isKieSource(row)
-                          ? "sponsored noreferrer"
+                          ? "sponsored nofollow noreferrer"
                           : "noreferrer"
                       }
                       target="_blank"
@@ -401,11 +415,11 @@ export default function SeedancePricingCalculatorPage() {
           </li>
           <li>
             <strong>BytePlus Mini availability:</strong> BytePlus publishes
-            pricing examples for Dreamina Seedance 2.0 Mini, but its official
-            tutorial states that Mini is currently limited to Model Playground
-            trial use and API access is expected on June 25, 2026 (UTC+8).
-            Therefore it is excluded from the provider ranking as of{" "}
-            {displayDate}.
+            pricing examples for Dreamina Seedance 2.0 Mini, but API
+            availability and production access should be verified in the
+            official BytePlus documentation before use. Mini rows are excluded
+            from the provider ranking until production API availability is
+            confirmed in this dataset.
           </li>
         </ul>
         <p>
@@ -423,8 +437,8 @@ export default function SeedancePricingCalculatorPage() {
           details are identified in the table.
         </p>
         <p>
-          Kie.ai outbound links use a referral URL. This does not change the
-          listed prices, calculations, or ranking methodology.
+          Kie.ai outbound links use a referral URL. Referral links do not
+          affect pricing data, calculations, or provider ranking.
         </p>
         <ul className="source-list">
           {Array.from(
@@ -436,7 +450,9 @@ export default function SeedancePricingCalculatorPage() {
               <a
                 href={row.sourceUrl}
                 rel={
-                  isKieSource(row) ? "sponsored noreferrer" : "noreferrer"
+                  isKieSource(row)
+                    ? "sponsored nofollow noreferrer"
+                    : "noreferrer"
                 }
                 target="_blank"
               >
@@ -448,6 +464,142 @@ export default function SeedancePricingCalculatorPage() {
             </li>
           ))}
         </ul>
+      </section>
+
+      <section className="content-section" aria-labelledby="about-seedance-2">
+        <h2 id="about-seedance-2">About Seedance 2</h2>
+        <p>
+          Seedance 2 is a video generation model used for short AI video
+          workflows, including product demos, social clips, creative tests, ad
+          concepts, and automated video production pipelines.
+        </p>
+
+        <div className="version-comparison">
+          <article>
+            <p className="directory-card-label">Pricing unit</p>
+            <h3>Output-second cost</h3>
+            <p>
+              The calculator normalizes provider prices into practical cost
+              terms: price per output second, cost per generated video, and
+              estimated monthly cost.
+            </p>
+          </article>
+          <article>
+            <p className="directory-card-label">Default scenario</p>
+            <h3>1,000 × 8 seconds</h3>
+            <p>
+              The baseline uses 1,000 videos per month at 8 seconds per video,
+              giving a realistic comparison point before production setup.
+            </p>
+          </article>
+          <article>
+            <p className="directory-card-label">Default comparison</p>
+            <h3>720p rows only</h3>
+            <p>
+              The default table compares 720p rows only, because 480p, 720p,
+              and 1080p outputs have different quality and cost structures.
+            </p>
+          </article>
+          <article>
+            <p className="directory-card-label">Provider coverage</p>
+            <h3>Public listed sources</h3>
+            <p>
+              Current data covers BytePlus official examples, fal.ai, PiAPI,
+              OpenRouter, EvoLink, and Kie.ai where public pricing is
+              available.
+            </p>
+          </article>
+        </div>
+
+        <p>
+          Seedance 2 pricing is not always listed in the same format across
+          providers. Some providers show a simple per-second rate. BytePlus
+          official examples use video-token based pricing, which is normalized
+          here into an estimated USD per output second.
+        </p>
+        <p>
+          Some routes may also use “from” pricing or provider-routed pricing,
+          meaning the final cost can depend on the route, mode, account terms,
+          or API behavior. Use the calculator to switch resolution and compare
+          providers within the same output tier.
+        </p>
+      </section>
+
+      <section
+        className="content-section"
+        aria-labelledby="seedance-2-cost-optimization-tips"
+      >
+        <h2 id="seedance-2-cost-optimization-tips">
+          Seedance 2 Cost Optimization Tips
+        </h2>
+        <p>
+          Use these checks to compare providers fairly and estimate the cost of
+          usable finished videos, not just the lowest listed rate.
+        </p>
+
+        <div className="version-comparison">
+          <article>
+            <p className="directory-card-label">Tip 01</p>
+            <h3>Compare the same resolution</h3>
+            <p>
+              A 480p route may look cheaper than 720p or 1080p, but that does
+              not make it the best option for your workflow. Compare 720p with
+              720p, or 1080p with 1080p, to avoid choosing based on a
+              lower-quality output tier.
+            </p>
+          </article>
+          <article>
+            <p className="directory-card-label">Tip 02</p>
+            <h3>Estimate finished-video cost</h3>
+            <p>
+              Price per output second is only the starting point. Use{" "}
+              <strong>
+                videos per month × seconds per video × price per output second
+              </strong>
+              ; for example, an 8-second video at $0.12/sec costs about $0.96,
+              or about $960 for 1,000 generations before taxes, retries, failed
+              generations, credits, storage, or provider-specific fees.
+            </p>
+          </article>
+          <article>
+            <p className="directory-card-label">Tip 03</p>
+            <h3>Use 720p for early testing</h3>
+            <p>
+              720p is often enough to evaluate motion, framing, visual style,
+              and prompt behavior while avoiding higher 1080p costs. Test
+              prompts and scene ideas at 720p, then reserve higher-cost routes
+              for clips that are ready for final use.
+            </p>
+          </article>
+          <article>
+            <p className="directory-card-label">Tip 04</p>
+            <h3>Check routed and token pricing</h3>
+            <p>
+              Providers may use direct per-second pricing, “from” pricing,
+              provider-routed pricing, or BytePlus-style video tokens. Treat
+              normalized per-second estimates as comparison aids, then confirm
+              the rate for your selected model, mode, resolution, and input
+              type.
+            </p>
+          </article>
+          <article>
+            <p className="directory-card-label">Tip 05</p>
+            <h3>Track retries and unused outputs</h3>
+            <p>
+              The lowest listed route is not always the lowest-cost real
+              workflow. Track total generations, successful generations,
+              accepted clips, retry rate, and average cost by provider and
+              resolution to measure cost per usable finished video.
+            </p>
+          </article>
+        </div>
+
+        <p>
+          Seedance 2 API pricing matters most when video generation becomes
+          repeatable. For a few test clips, provider differences may be small;
+          at hundreds or thousands of videos per month, small per-second
+          differences can materially change the monthly budget.
+        </p>
       </section>
 
       <section className="content-section faq" aria-labelledby="faq-title">
