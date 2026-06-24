@@ -407,7 +407,7 @@ export default function VideoGenerationPricingPage() {
                 className="directory-card-link"
                 href="/seedance-2-5-pricing"
               >
-                Track Seedance 2.5 pricing
+                Seedance 2.5 API pricing status
                 <span aria-hidden="true">→</span>
               </Link>
             </article>

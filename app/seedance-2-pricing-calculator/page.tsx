@@ -618,13 +618,14 @@ export default function SeedancePricingCalculatorPage() {
         <p className="related-guide-body">
           Need a broader overview of AI video API pricing? Compare
           text-to-video, image-to-video, billing units, and model-level
-          pricing pages.
+          pricing pages. You can also follow the Seedance 2.5 pricing tracker
+          while public pricing is still pending.
         </p>
         <Link
           className="text-link"
-          href="/video-generation-api-pricing"
+          href="/seedance-2-5-pricing"
         >
-          View AI Video API Pricing Comparison
+          Seedance 2.5 pricing tracker
           <span aria-hidden="true">→</span>
         </Link>
       </aside>
