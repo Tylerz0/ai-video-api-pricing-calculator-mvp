@@ -65,10 +65,17 @@ select {
 }
 
 .brand {
+  align-items: center;
+  display: inline-flex;
   font-size: 0.95rem;
   font-weight: 800;
+  gap: 10px;
   letter-spacing: -0.01em;
   text-decoration: none;
+}
+
+.brand-logo {
+  flex-shrink: 0;
 }
 
 .site-header nav a,

@@ -10,6 +10,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: siteConfig.name,
   description: siteConfig.description,
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
@@ -19,7 +23,14 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         <header className="site-header">
           <div className="shell header-inner">
             <Link className="brand" href="/">
-              Video API Costs
+              <img
+                alt="Video API Cost logo"
+                className="brand-logo"
+                height={28}
+                src="/logo.png"
+                width={28}
+              />
+              Video API Cost
             </Link>
             <nav aria-label="Main navigation">
               <Link href="/video-generation-api-pricing">
