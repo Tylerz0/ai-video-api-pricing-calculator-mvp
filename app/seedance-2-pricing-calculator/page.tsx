@@ -613,10 +613,19 @@ export default function SeedancePricingCalculatorPage() {
         ))}
       </section>
 
-      <aside className="back-link">
-        <Link href="/video-generation-api-pricing">
-          <span aria-hidden="true">←</span>
-          Browse all video API calculators
+      <aside className="related-guide">
+        <p className="related-guide-title">Related guide</p>
+        <p className="related-guide-body">
+          Need a broader overview of AI video API pricing? Compare
+          text-to-video, image-to-video, billing units, and model-level
+          pricing pages.
+        </p>
+        <Link
+          className="text-link"
+          href="/video-generation-api-pricing"
+        >
+          View AI Video API Pricing Comparison
+          <span aria-hidden="true">→</span>
         </Link>
       </aside>
     </div>
