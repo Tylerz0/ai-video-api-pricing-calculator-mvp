@@ -26,9 +26,9 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
               <img
                 alt="Video API Cost logo"
                 className="brand-logo"
-                height={28}
+                height={48}
                 src="/logo.png"
-                width={28}
+                width={48}
               />
               Video API Cost
             </Link>
