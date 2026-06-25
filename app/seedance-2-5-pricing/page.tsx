@@ -254,7 +254,7 @@ export default function SeedanceTwoFivePricingPage() {
           action="mailto:hello@videoapicost.com?subject=Seedance%202.5%20pricing%20update"
           className="email-capture-form"
           encType="text/plain"
-          method="post"
+          method="get"
         >
           <label className="sr-only" htmlFor="seedance-25-email">
             Email address
