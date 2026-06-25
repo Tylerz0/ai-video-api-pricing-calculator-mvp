@@ -16,9 +16,9 @@ import pricingData from "@/pricing-data.json";
 export const dynamic = "force-static";
 
 const pageTitle =
-  "Seedance 2 API Cost Per Second: 720p Price per Output Second";
+  "Seedance 2.0 API Cost Per Second: 720p Price per Output Second";
 const pageDescription =
-  "Compare Seedance 2 API pricing normalized to USD per output second. Estimate any 720p video generation volume using video count × seconds × price per second.";
+  "Compare Seedance 2.0 API pricing normalized to USD per output second. Estimate any 720p video generation volume using video count × seconds × price per second.";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -79,14 +79,14 @@ export default function SeedanceTwoApiCostPerSecondPage() {
         <span aria-hidden="true">/</span>
         <Link href="/video-generation-api-pricing">Video API pricing</Link>
         <span aria-hidden="true">/</span>
-        <span>Seedance 2 cost per second</span>
+        <span>Seedance 2.0 cost per second</span>
       </nav>
 
       <section className="page-heading">
         <p className="eyebrow">Cost per output second</p>
-        <h1>Seedance 2 API Cost Per Second</h1>
+        <h1>Seedance 2.0 API Cost Per Second</h1>
         <p>
-          Compare Seedance 2 listed public API pricing normalized to USD per
+          Compare Seedance 2.0 listed public API pricing normalized to USD per
           output second, with a default focus on 720p rows so routes are
           compared at the same output resolution.
         </p>
@@ -97,8 +97,8 @@ export default function SeedanceTwoApiCostPerSecondPage() {
         {lowestRow && highestRow && priceRange ? (
           <>
             <p className="quick-answer-intro">
-              Based on listed public API prices, Seedance 2 720p prices in this
-              dataset are normalized to USD per output second.
+              Based on listed public API prices, Seedance 2.0 720p prices in
+              this dataset are normalized to USD per output second.
             </p>
             <ul className="quick-answer-list">
               <li>
@@ -136,13 +136,13 @@ export default function SeedanceTwoApiCostPerSecondPage() {
             </p>
           </>
         ) : (
-          <p>No listed 720p Seedance 2 pricing rows are available yet.</p>
+          <p>No listed 720p Seedance 2.0 pricing rows are available yet.</p>
         )}
       </section>
 
       <section className="content-section" aria-labelledby="formula-title">
         <p className="eyebrow">Formula</p>
-        <h2 id="formula-title">How to calculate Seedance 2 API cost</h2>
+        <h2 id="formula-title">How to calculate Seedance 2.0 API cost</h2>
         <div className="quick-answer-formula">
           <p className="quick-answer-formula-title">
             Per-output-second estimate
@@ -174,7 +174,7 @@ export default function SeedanceTwoApiCostPerSecondPage() {
           <div>
             <p className="eyebrow">720p normalized pricing</p>
             <h2 id="pricing-table-title">
-              Seedance 2 720p price per output second
+              Seedance 2.0 720p price per output second
             </h2>
           </div>
           <p>Server-rendered from local pricing data</p>
@@ -182,7 +182,7 @@ export default function SeedanceTwoApiCostPerSecondPage() {
         <div className="table-wrap">
           <table className="pricing-table pricing-table-wide">
             <caption className="sr-only">
-              Seedance 2 720p normalized price per output second table
+              Seedance 2.0 720p normalized price per output second table
             </caption>
             <thead>
               <tr>
@@ -283,7 +283,7 @@ export default function SeedanceTwoApiCostPerSecondPage() {
         <p>
           Need a full monthly estimate? Use the{" "}
           <Link className="text-link" href="/seedance-2-pricing-calculator">
-            Seedance 2 pricing calculator
+            Seedance 2.0 pricing calculator
           </Link>
           .
         </p>
