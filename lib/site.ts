@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: "AI Video API Pricing Calculator",
+  name: "Video API Cost",
+  alternateName: "VideoAPICost",
   description:
-    "Compare estimated AI video generation API costs using simple, transparent calculators.",
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "https://ai-video-api-pricing-calculator.example.com",
+    "Compare AI video API pricing, cost baselines, and provider availability.",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://videoapicost.com",
+  logoPath: "/logo.png",
 };

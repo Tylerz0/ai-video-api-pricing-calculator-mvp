@@ -8,18 +8,56 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: siteConfig.name,
-  description: siteConfig.description,
-  icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+  title: {
+    default: siteConfig.name,
+    template: "%s",
   },
+  description: siteConfig.description,
+  applicationName: siteConfig.name,
+  manifest: "/site.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.name,
+  alternateName: siteConfig.alternateName,
+  url: `${siteConfig.url}/`,
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  url: `${siteConfig.url}/`,
+  logo: `${siteConfig.url}${siteConfig.logoPath}`,
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
       <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd).replace(/</g, "\\u003c"),
+          }}
+          type="application/ld+json"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd).replace(/</g, "\\u003c"),
+          }}
+          type="application/ld+json"
+        />
         <header className="site-header">
           <div className="shell header-inner">
             <Link className="brand" href="/">

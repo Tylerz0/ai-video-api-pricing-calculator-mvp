@@ -4,7 +4,7 @@ import Link from "next/link";
 export const dynamic = "force-static";
 
 export const metadata: Metadata = {
-  title: "AI Video API Pricing Calculator",
+  title: "Video API Cost | AI Video API Pricing Calculator",
   description:
     "Estimate and compare AI video generation API costs with transparent, provider-level pricing calculators.",
   alternates: {
