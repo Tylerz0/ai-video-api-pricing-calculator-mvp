@@ -7,9 +7,10 @@ import pricingData from "@/pricing-data.json";
 
 export const dynamic = "force-static";
 
-const pageTitle = "Seedance 2 API Pricing Calculator | Video API Cost";
+const pageTitle =
+  "Seedance 2.0 API Pricing Calculator: Fast, Mini & Standard Costs | Video API Cost";
 const pageDescription =
-  "Estimate Seedance 2 API cost per video and monthly spend at 720p. Compare public provider rates by resolution, duration, and video volume.";
+  "Compare Seedance 2.0 Standard, Fast, and Mini API pricing across providers. Estimate cost per 8-second video and monthly generation costs.";
 const siteUrl = "https://videoapicost.com";
 const pageUrl = `${siteUrl}/seedance-2-pricing-calculator`;
 
@@ -58,21 +59,6 @@ const highestPriceRow = defaultComparison[defaultComparison.length - 1];
 const isKieSource = (row: PricingRow) =>
   new URL(row.sourceUrl).hostname === "kie.ai";
 
-function getPrice(
-  provider: string,
-  modelName: string,
-  resolution: string,
-  modeIncludes?: string,
-) {
-  return pricingRows.find(
-    (row) =>
-      row.provider === provider &&
-      row.modelName === modelName &&
-      row.resolution === resolution &&
-      (modeIncludes ? row.mode.includes(modeIncludes) : true),
-  )?.pricePerSecond;
-}
-
 function formatCurrency(value: number, maximumFractionDigits = 4) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -81,6 +67,124 @@ function formatCurrency(value: number, maximumFractionDigits = 4) {
     maximumFractionDigits,
   }).format(value);
 }
+
+// ── Variant filtering helpers ──
+
+const variantFilter = (row: PricingRow, keywords: string[]) =>
+  keywords.some((kw) => row.mode.toLowerCase().includes(kw));
+
+const fastRows = pricingRows.filter((row) =>
+  variantFilter(row, ["fast"]),
+);
+const miniRows = pricingRows.filter((row) =>
+  variantFilter(row, ["mini"]),
+);
+const standardRows = pricingRows.filter(
+  (row) =>
+    !variantFilter(row, ["fast", "mini"]) ||
+    row.mode.toLowerCase().includes("standard"),
+);
+
+// ── Dynamic provider lists ──
+
+const fast720Providers = [
+  ...new Set(
+    fastRows
+      .filter((r) => r.resolution === "720p")
+      .map((r) => r.provider),
+  ),
+];
+const mini720Providers = [
+  ...new Set(
+    miniRows
+      .filter((r) => r.resolution === "720p")
+      .map((r) => r.provider),
+  ),
+];
+const standard720Providers = [
+  ...new Set(
+    standardRows
+      .filter((r) => r.resolution === "720p")
+      .map((r) => r.provider),
+  ),
+];
+const allProviders = [...new Set(pricingRows.map((r) => r.provider))];
+
+// Fast vs Standard pairs for FAQ (same provider has both variants at 720p)
+const fastVsStandardPairs = (() => {
+  const fast720 = fastRows.filter((r) => r.resolution === "720p");
+  const standard720 = standardRows.filter((r) => r.resolution === "720p");
+  const pairs: { fast: PricingRow; standard: PricingRow }[] = [];
+  for (const fastRow of fast720) {
+    const stdRow = standard720.find((r) => r.provider === fastRow.provider);
+    if (stdRow) pairs.push({ fast: fastRow, standard: stdRow });
+  }
+  return pairs.sort(
+    (a, b) => a.fast.pricePerSecond - b.fast.pricePerSecond,
+  );
+})();
+
+// ── Variant summary ──
+
+interface VariantSummary {
+  variant: string;
+  lowestRate: number;
+  costPerVideo: number;
+  providers: string[];
+  note: string;
+}
+
+function getLowest720p(rows: PricingRow[]): PricingRow | undefined {
+  return rows
+    .filter((r) => r.resolution === "720p")
+    .sort((a, b) => a.pricePerSecond - b.pricePerSecond)[0];
+}
+
+function buildVariantSummary(
+  variantName: string,
+  rows: PricingRow[],
+  note: string,
+): VariantSummary {
+  const lowest = getLowest720p(rows);
+  const providers720p = [
+    ...new Set(
+      rows
+        .filter((r) => r.resolution === "720p")
+        .map((r) => r.provider),
+    ),
+  ];
+  return {
+    variant: variantName,
+    lowestRate: lowest?.pricePerSecond ?? 0,
+    costPerVideo:
+      (lowest?.pricePerSecond ?? 0) * pricingData.defaultInputs.secondsPerVideo,
+    providers: providers720p,
+    note,
+  };
+}
+
+const variantSummaries: VariantSummary[] = [
+  buildVariantSummary(
+    "Seedance 2.0 Fast",
+    fastRows,
+    "Fast mode is available across most providers and is typically 15–20% cheaper than Standard.",
+  ),
+  buildVariantSummary(
+    "Seedance 2.0 Mini",
+    miniRows,
+    `Mini is the lowest-cost variant, offered by ${mini720Providers.join(" and ")} at 720p.`,
+  ),
+  buildVariantSummary(
+    "Seedance 2.0 Standard",
+    standardRows,
+    "Standard is the most widely available variant across all listed providers.",
+  ),
+];
+
+// ── FAQ ──
+
+const cheapestFast = getLowest720p(fastRows);
+const cheapestMini = getLowest720p(miniRows);
 
 const faqItems = [
   {
@@ -97,9 +201,44 @@ const faqItems = [
   },
   {
     question: "Is Seedance 2 Fast cheaper than standard Seedance 2?",
-    answer: `Yes in the current listed same-provider 720p comparisons. The BytePlus official 16:9 examples normalize to about ${formatCurrency(getPrice("BytePlus (official)", "Dreamina Seedance 2.0 Fast", "720p")!)} per output second for Fast versus ${formatCurrency(getPrice("BytePlus (official)", "Dreamina Seedance 2.0", "720p")!)} for Standard. fal.ai Fast is ${formatCurrency(getPrice("fal.ai", "Seedance 2.0 Fast", "720p")!)} versus ${formatCurrency(getPrice("fal.ai", "Seedance 2.0", "720p", "Text-to-video")!)} for Standard text-to-video. PiAPI Fast is ${formatCurrency(getPrice("PiAPI", "seedance-2-fast", "720p")!)} versus ${formatCurrency(getPrice("PiAPI", "seedance-2", "720p")!)} for Pro. Kie.ai Fast without video input is ${formatCurrency(getPrice("Kie.ai", "bytedance/seedance-2 fast", "720p")!)} versus ${formatCurrency(getPrice("Kie.ai", "bytedance/seedance-2", "720p")!)} for Standard. OpenRouter Fast is ${formatCurrency(getPrice("OpenRouter", "bytedance/seedance-2.0-fast", "720p")!)} versus ${formatCurrency(getPrice("OpenRouter", "bytedance/seedance-2.0", "720p")!)} for Standard.`,
+    answer:
+      fastVsStandardPairs.length > 0
+        ? `Yes in the current listed same-provider 720p comparisons. ${fastVsStandardPairs
+            .map(
+              ({ fast, standard }) =>
+                `${fast.provider} ${fast.mode} is ${formatCurrency(fast.pricePerSecond)} per second versus ${standard.mode} at ${formatCurrency(standard.pricePerSecond)}`,
+            )
+            .join(". ")}.`
+        : "Based on current listed rates, Fast variants are generally priced lower than Standard variants at the same resolution, but availability and pricing vary by provider.",
+  },
+  {
+    question: "How much does Seedance 2.0 Fast cost?",
+    answer: cheapestFast
+      ? `The lowest listed 720p Fast rate is ${formatCurrency(cheapestFast.pricePerSecond)} per second from ${cheapestFast.provider} (${cheapestFast.mode}), which equals about ${formatCurrency(cheapestFast.pricePerSecond * 8)} per 8-second video. Fast pricing varies by provider and resolution — use the calculator to compare options.`
+      : "Seedance 2.0 Fast pricing varies by provider. Use the calculator to filter Fast rows and compare per-second rates.",
+  },
+  {
+    question: "How much does Seedance 2.0 Mini cost?",
+    answer: cheapestMini
+      ? `The lowest listed 720p Mini rate is ${formatCurrency(cheapestMini.pricePerSecond)} per second from ${cheapestMini.provider} (${cheapestMini.mode}), which equals about ${formatCurrency(cheapestMini.pricePerSecond * 8)} per 8-second video. Mini is the lowest-cost variant in the current dataset, but availability is limited to fewer providers.`
+      : "Seedance 2.0 Mini pricing varies by provider. Mini is typically the lowest-cost variant but is offered by fewer providers.",
+  },
+  {
+    question: "Is Seedance 2.0 Mini cheaper than Seedance 2.0 Fast?",
+    answer:
+      cheapestMini && cheapestFast
+        ? `Yes, based on current listed 720p rates. The lowest Mini rate (${cheapestMini.provider}: ${formatCurrency(cheapestMini.pricePerSecond)}/sec) is cheaper than the lowest Fast rate (${cheapestFast.provider}: ${formatCurrency(cheapestFast.pricePerSecond)}/sec). However, Mini has fewer provider options and may have different quality, resolution support, or availability. Always verify current pricing and availability on the provider's page.`
+        : "Based on current listed rates, Mini variants tend to be priced lower than Fast variants, but availability and supported resolutions vary by provider.",
+  },
+  {
+    question:
+      "What is the difference between Seedance 2.0 Standard, Fast, and Mini?",
+    answer:
+      "Seedance 2.0 variants differ by speed, quality, and pricing. Fast mode reduces generation time at a lower per-second cost compared to Standard, making it suitable for high-volume or rapid-iteration workflows. Mini is a lighter, lower-cost variant for budget-conscious use cases, though it may have fewer resolution options and is offered by fewer providers. Standard mode provides full-quality generation and is the most widely available variant across providers. Final choice depends on resolution needs, generation volume, acceptable quality, and provider availability.",
   },
 ];
+
+// ── Structured data ──
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -107,26 +246,26 @@ const structuredData = {
     {
       "@type": "SoftwareApplication",
       "@id": `${pageUrl}#software-application`,
-      name: "Seedance 2 API Pricing Calculator",
+      name: "Seedance 2.0 API Pricing Calculator",
       description:
-        "A neutral calculator for estimating Seedance 2 API cost per video and comparing public provider rates by selected resolution. Provider ranking is price-only and referral links do not affect pricing data, calculations, or ranking.",
+        "A neutral calculator for estimating Seedance 2.0 API cost per video across Standard, Fast, and Mini variants. Compares public provider rates by selected resolution. Provider ranking is price-only and referral links do not affect pricing data, calculations, or ranking.",
       url: pageUrl,
       applicationCategory: "DeveloperApplication",
       operatingSystem: "Any",
       isAccessibleForFree: true,
       featureList: [
-        "Compare public Seedance 2 API pricing by provider",
+        "Compare public Seedance 2.0 API pricing by provider and variant",
         "Filter provider rates by output resolution",
-        "Estimate cost per video",
+        "Estimate cost per video for Standard, Fast, and Mini modes",
         "Estimate monthly generation cost",
       ],
     },
     {
       "@type": "Dataset",
       "@id": `${pageUrl}#dataset`,
-      name: "Seedance 2 public API pricing comparison",
+      name: "Seedance 2.0 public API pricing comparison",
       description:
-        "Public Seedance 2 provider pricing manually collected from linked provider pages and normalized to USD per output second where possible. Provider ranking is price-only for the selected resolution, and referral links do not affect calculations or ranking.",
+        "Public Seedance 2.0 provider pricing manually collected from linked provider pages and normalized to USD per output second where possible. Covers Standard, Fast, Mini, and provider-specific modes. Provider ranking is price-only for the selected resolution, and referral links do not affect calculations or ranking.",
       url: pageUrl,
       dateModified: pricingData.lastUpdated,
       license: `${siteUrl}/seedance-2-pricing-calculator`,
@@ -153,12 +292,7 @@ const structuredData = {
       "@type": "BreadcrumbList",
       "@id": `${pageUrl}#breadcrumbs`,
       itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Home",
-          item: siteUrl,
-        },
+        { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
         {
           "@type": "ListItem",
           position: 2,
@@ -168,7 +302,7 @@ const structuredData = {
         {
           "@type": "ListItem",
           position: 3,
-          name: "Seedance 2 API Pricing Calculator",
+          name: "Seedance 2.0 API Pricing Calculator",
           item: pageUrl,
         },
       ],
@@ -179,14 +313,84 @@ const structuredData = {
       mainEntity: faqItems.map((item) => ({
         "@type": "Question",
         name: item.question,
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: item.answer,
-        },
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
       })),
     },
   ],
 };
+
+// ── Variant section table component ──
+
+function VariantTable({
+  rows,
+  caption,
+}: {
+  rows: PricingRow[];
+  caption: string;
+}) {
+  const variantRows = rows
+    .filter((r) => r.resolution === "720p")
+    .map((r) => ({
+      ...r,
+      costPerVideo:
+        r.pricePerSecond * pricingData.defaultInputs.secondsPerVideo,
+    }))
+    .sort((a, b) => a.pricePerSecond - b.pricePerSecond);
+
+  if (variantRows.length === 0) return <p>No 720p rows found for this variant.</p>;
+
+  return (
+    <div className="table-wrap" style={{ marginTop: 20 }}>
+      <table className="pricing-table">
+        <caption className="sr-only">{caption}</caption>
+        <thead>
+          <tr>
+            <th scope="col">Provider</th>
+            <th scope="col">Model / Mode</th>
+            <th scope="col">Resolution</th>
+            <th scope="col">Price per second</th>
+            <th scope="col">8-second video</th>
+            <th scope="col">Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          {variantRows.map((row) => (
+            <tr
+              key={`${row.provider}-${row.modelName}-${row.mode}-${row.resolution}`}
+            >
+              <th scope="row">{row.provider}</th>
+              <td>
+                <span className="table-primary">{row.modelName}</span>
+                <small className="table-secondary">{row.mode}</small>
+              </td>
+              <td>{row.resolution}</td>
+              <td>{formatCurrency(row.pricePerSecond, 5)}</td>
+              <td>{formatCurrency(row.costPerVideo, 5)}</td>
+              <td className="source-cell">
+                <a
+                  href={row.sourceUrl}
+                  rel={
+                    isKieSource(row)
+                      ? "sponsored nofollow noreferrer"
+                      : "noreferrer"
+                  }
+                  target="_blank"
+                >
+                  {row.sourceLabel}
+                  <span className="external-mark" aria-hidden="true">
+                    ↗
+                  </span>
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// ── Page ──
 
 export default function SeedancePricingCalculatorPage() {
   return (
@@ -203,16 +407,22 @@ export default function SeedancePricingCalculatorPage() {
         <span aria-hidden="true">/</span>
         <Link href="/video-generation-api-pricing">Video API pricing</Link>
         <span aria-hidden="true">/</span>
-        <span>Seedance 2</span>
+        <span>Seedance 2.0</span>
       </nav>
 
+      {/* ── 1. Hero ── */}
       <section className="page-heading calculator-page-heading">
         <p className="eyebrow">Provider comparison</p>
-        <h1>Seedance 2 API Pricing Calculator</h1>
+        <h1>Seedance 2.0 API Pricing Calculator</h1>
         <p>
-          Compare public Seedance 2 provider pricing and estimate cost per
-          video. The default scenario is 1,000 videos per month at 8 seconds
-          per video. Compare providers at the same selected resolution.
+          Compare Seedance 2.0 Standard, Fast, and Mini API pricing across
+          providers. The default scenario is 1,000 videos per month at 8
+          seconds per video. Compare providers at the same selected resolution.
+        </p>
+        <p>
+          Some providers refer to this model family as Seedance 2, while others
+          list it as Seedance 2.0. This page compares Seedance 2.0 Standard,
+          Fast, Mini, and provider-specific modes across public API providers.
         </p>
         <p className="updated-date">
           Pricing data last updated{" "}
@@ -220,9 +430,29 @@ export default function SeedancePricingCalculatorPage() {
         </p>
       </section>
 
+      {/* ── 2. Variant navigation ── */}
+      <section className="variant-nav" aria-labelledby="variant-nav-title">
+        <h2 id="variant-nav-title">Seedance 2.0 variants covered</h2>
+        <ul className="variant-nav-list">
+          <li>
+            <a href="#fast-pricing">Seedance 2.0 Fast</a>
+          </li>
+          <li>
+            <a href="#mini-pricing">Seedance 2.0 Mini</a>
+          </li>
+          <li>
+            <a href="#standard-pricing">Seedance 2.0 Standard</a>
+          </li>
+          <li>
+            <span>Provider-specific Pro and no-video-input routes</span>
+          </li>
+        </ul>
+      </section>
+
+      {/* ── 3. Cost summary ── */}
       <section className="cost-summary" aria-labelledby="cost-summary-title">
         <p className="eyebrow">Cost summary</p>
-        <h2 id="cost-summary-title">Seedance 2 720p cost summary</h2>
+        <h2 id="cost-summary-title">Seedance 2.0 720p cost summary</h2>
         <p className="cost-summary-scenario">
           <strong>Default scenario:</strong>{" "}
           {pricingData.defaultInputs.videosPerMonth.toLocaleString("en-US")}{" "}
@@ -253,8 +483,8 @@ export default function SeedancePricingCalculatorPage() {
             {formatCurrency(cheapestPriceRow.pricePerSecond)} per output second.
           </p>
           <p>
-            <strong>Formula:</strong> monthly cost = videos × seconds × price per
-            second.
+            <strong>Formula:</strong> monthly cost = videos × seconds × price
+            per second.
           </p>
         </div>
         <p className="cost-summary-note">
@@ -264,6 +494,7 @@ export default function SeedancePricingCalculatorPage() {
         </p>
       </section>
 
+      {/* ── 4. Default 720p comparison table ── */}
       <section
         className="static-comparison"
         aria-labelledby="default-comparison-title"
@@ -272,7 +503,7 @@ export default function SeedancePricingCalculatorPage() {
           <div>
             <p className="eyebrow">Default comparison</p>
             <h2 id="default-comparison-title">
-              Seedance 2 720p cost for 1,000 eight-second videos
+              Seedance 2.0 720p cost for 1,000 eight-second videos
             </h2>
           </div>
           <p>Server-rendered from local pricing data</p>
@@ -280,7 +511,7 @@ export default function SeedancePricingCalculatorPage() {
         <div className="table-wrap">
           <table className="pricing-table pricing-table-wide">
             <caption className="sr-only">
-              Static Seedance 2 720p pricing comparison for 1,000 videos at 8
+              Static Seedance 2.0 720p pricing comparison for 1,000 videos at 8
               seconds each, comparing providers at the same resolution
             </caption>
             <thead>
@@ -367,6 +598,62 @@ export default function SeedancePricingCalculatorPage() {
         </p>
       </section>
 
+      {/* ── 5. Variant summary ── */}
+      <section
+        className="content-section"
+        aria-labelledby="variant-summary-title"
+      >
+        <h2 id="variant-summary-title">
+          Seedance 2.0 Standard vs Fast vs Mini Pricing
+        </h2>
+        <p>
+          The table below summarizes the lowest listed 720p rate for each
+          Seedance 2.0 variant across currently tracked providers. Use this as
+          a quick comparison, then check the variant-specific sections for
+          detailed provider rows.
+        </p>
+        <div className="table-wrap" style={{ marginTop: 20 }}>
+          <table className="variant-summary-table">
+            <caption className="sr-only">
+              Seedance 2.0 variant pricing summary — Standard vs Fast vs Mini
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Variant</th>
+                <th scope="col">Lowest listed 720p rate</th>
+                <th scope="col">8-second video cost</th>
+                <th scope="col">Providers found</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {variantSummaries.map((vs) => (
+                <tr key={vs.variant}>
+                  <th scope="row">{vs.variant}</th>
+                  <td>
+                    {vs.lowestRate > 0
+                      ? formatCurrency(vs.lowestRate)
+                      : "N/A"}
+                  </td>
+                  <td>
+                    {vs.costPerVideo > 0
+                      ? formatCurrency(vs.costPerVideo)
+                      : "N/A"}
+                  </td>
+                  <td>
+                    {vs.providers.length > 0
+                      ? vs.providers.join(", ")
+                      : "None listed"}
+                  </td>
+                  <td>{vs.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* ── 6. Interactive calculator ── */}
       <PricingCalculator
         currency={pricingData.currency}
         defaultSecondsPerVideo={pricingData.defaultInputs.secondsPerVideo}
@@ -374,6 +661,67 @@ export default function SeedancePricingCalculatorPage() {
         pricingRows={pricingRows}
       />
 
+      {/* ── 7. Fast pricing ── */}
+      <section className="content-section" aria-labelledby="fast-pricing">
+        <h2 id="fast-pricing">Seedance 2.0 Fast API Pricing</h2>
+        <p>
+          Seedance 2.0 Fast is a lower-latency variant designed for rapid
+          iteration and high-volume workflows. Fast mode typically costs 15–20%
+          less than Standard at the same resolution, making it a common choice
+          for prototyping, A/B testing, and batch video generation.
+        </p>
+        <p>
+          Fast rows are available from {fast720Providers.join(", ")} at 720p.
+          Availability at other resolutions varies by provider.
+        </p>
+        <VariantTable
+          caption="Seedance 2.0 Fast 720p pricing rows across providers"
+          rows={fastRows}
+        />
+      </section>
+
+      {/* ── 8. Mini pricing ── */}
+      <section className="content-section" aria-labelledby="mini-pricing">
+        <h2 id="mini-pricing">Seedance 2.0 Mini API Pricing</h2>
+        <p>
+          Seedance 2.0 Mini is the lightest and lowest-cost variant in the
+          Seedance 2.0 family. It is priced below Fast and Standard at the same
+          resolution, but provider availability is more limited — currently
+          listed by {mini720Providers.join(", ")} at 720p.
+        </p>
+        <p>
+          BytePlus publishes pricing examples for Dreamina Seedance 2.0 Mini,
+          but Mini rows are excluded from the provider ranking until production
+          API availability is confirmed.
+        </p>
+        <VariantTable
+          caption="Seedance 2.0 Mini 720p pricing rows across providers"
+          rows={miniRows}
+        />
+      </section>
+
+      {/* ── 9. Standard pricing ── */}
+      <section className="content-section" aria-labelledby="standard-pricing">
+        <h2 id="standard-pricing">Seedance 2.0 Standard API Pricing</h2>
+        <p>
+          Seedance 2.0 Standard is the full-quality generation mode and the most
+          broadly available variant across all tracked providers. It offers the
+          widest resolution support — from 480p up to 4K on select providers —
+          and covers text-to-video, image-to-video, and no-video-input
+          workflows.
+        </p>
+        <p>
+          Standard pricing is available from {standard720Providers.join(", ")}{" "}
+          at multiple resolutions. Use the interactive calculator above to
+          filter by resolution and provider.
+        </p>
+        <VariantTable
+          caption="Seedance 2.0 Standard 720p pricing rows across providers"
+          rows={standardRows}
+        />
+      </section>
+
+      {/* ── 10. Methodology ── */}
       <section
         className="content-section methodology"
         aria-labelledby="methodology-title"
@@ -429,6 +777,7 @@ export default function SeedancePricingCalculatorPage() {
         </p>
       </section>
 
+      {/* ── 11. Pricing sources ── */}
       <section className="content-section" aria-labelledby="sources-title">
         <h2 id="sources-title">Pricing sources</h2>
         <p>
@@ -467,10 +816,11 @@ export default function SeedancePricingCalculatorPage() {
         </ul>
       </section>
 
-      <section className="content-section" aria-labelledby="about-seedance-2">
-        <h2 id="about-seedance-2">About Seedance 2</h2>
+      {/* ── 12. About Seedance 2.0 ── */}
+      <section className="content-section" aria-labelledby="about-seedance-20">
+        <h2 id="about-seedance-20">About Seedance 2.0</h2>
         <p>
-          Seedance 2 is a video generation model used for short AI video
+          Seedance 2.0 is a video generation model used for short AI video
           workflows, including product demos, social clips, creative tests, ad
           concepts, and automated video production pipelines.
         </p>
@@ -505,33 +855,33 @@ export default function SeedancePricingCalculatorPage() {
             <p className="directory-card-label">Provider coverage</p>
             <h3>Public listed sources</h3>
             <p>
-              Current data covers BytePlus official examples, fal.ai, PiAPI,
-              OpenRouter, EvoLink, and Kie.ai where public pricing is
-              available.
+              Current data covers {allProviders.join(", ")} where public
+              pricing is available.
             </p>
           </article>
         </div>
 
         <p>
-          Seedance 2 pricing is not always listed in the same format across
+          Seedance 2.0 pricing is not always listed in the same format across
           providers. Some providers show a simple per-second rate. BytePlus
           official examples use video-token based pricing, which is normalized
           here into an estimated USD per output second.
         </p>
         <p>
-          Some routes may also use “from” pricing or provider-routed pricing,
+          Some routes may also use "from" pricing or provider-routed pricing,
           meaning the final cost can depend on the route, mode, account terms,
           or API behavior. Use the calculator to switch resolution and compare
           providers within the same output tier.
         </p>
       </section>
 
+      {/* ── 13. Cost optimization tips ── */}
       <section
         className="content-section"
         aria-labelledby="seedance-2-cost-optimization-tips"
       >
         <h2 id="seedance-2-cost-optimization-tips">
-          Seedance 2 Cost Optimization Tips
+          Seedance 2.0 Cost Optimization Tips
         </h2>
         <p>
           Use these checks to compare providers fairly and estimate the cost of
@@ -576,7 +926,7 @@ export default function SeedancePricingCalculatorPage() {
             <p className="directory-card-label">Tip 04</p>
             <h3>Check routed and token pricing</h3>
             <p>
-              Providers may use direct per-second pricing, “from” pricing,
+              Providers may use direct per-second pricing, "from" pricing,
               provider-routed pricing, or BytePlus-style video tokens. Treat
               normalized per-second estimates as comparison aids, then confirm
               the rate for your selected model, mode, resolution, and input
@@ -596,13 +946,14 @@ export default function SeedancePricingCalculatorPage() {
         </div>
 
         <p>
-          Seedance 2 API pricing matters most when video generation becomes
+          Seedance 2.0 API pricing matters most when video generation becomes
           repeatable. For a few test clips, provider differences may be small;
           at hundreds or thousands of videos per month, small per-second
           differences can materially change the monthly budget.
         </p>
       </section>
 
+      {/* ── 14. FAQ ── */}
       <section className="content-section faq" aria-labelledby="faq-title">
         <h2 id="faq-title">Frequently asked questions</h2>
         {faqItems.map((item) => (
@@ -613,18 +964,14 @@ export default function SeedancePricingCalculatorPage() {
         ))}
       </section>
 
+      {/* ── 15. Related guide ── */}
       <aside className="related-guide">
         <p className="related-guide-title">Related guide</p>
         <p className="related-guide-body">
-          Need a broader overview of AI video API pricing? Compare
-          text-to-video, image-to-video, billing units, and model-level
-          pricing pages. You can also follow the Seedance 2.5 pricing tracker
-          while public pricing is still pending.
+          Tracking Seedance 2.5 API pricing? Monitor official and provider
+          pricing status until confirmed public rates become available.
         </p>
-        <Link
-          className="text-link"
-          href="/seedance-2-5-pricing"
-        >
+        <Link className="text-link" href="/seedance-2-5-pricing">
           Seedance 2.5 pricing tracker
           <span aria-hidden="true">→</span>
         </Link>

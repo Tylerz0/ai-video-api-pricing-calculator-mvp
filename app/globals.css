@@ -1401,3 +1401,110 @@ tbody td {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Variant navigation */
+.variant-nav {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 32px;
+  max-width: 920px;
+  padding: 24px 28px;
+}
+
+.variant-nav h2 {
+  font-size: 0.95rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+
+.variant-nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.variant-nav-list a {
+  background: var(--background);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--accent);
+  display: inline-flex;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 8px 15px;
+  text-decoration: none;
+  transition:
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.variant-nav-list a:hover {
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.variant-nav-list span {
+  align-items: center;
+  color: var(--muted);
+  display: inline-flex;
+  font-size: 0.82rem;
+  padding: 8px 4px;
+}
+
+/* Variant summary table */
+.variant-summary-table {
+  min-width: 720px;
+  width: 100%;
+}
+
+.variant-summary-table th,
+.variant-summary-table td {
+  padding: 14px 16px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.variant-summary-table thead th {
+  background: var(--surface-muted);
+  color: var(--muted);
+  font-size: 0.73rem;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.variant-summary-table tbody th {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.variant-summary-table tbody td {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 700px) {
+  .variant-nav {
+    padding: 20px;
+  }
+
+  .variant-nav-list a,
+  .variant-nav-list span {
+    font-size: 0.8rem;
+    padding: 7px 13px;
+  }
+
+  .variant-summary-table {
+    min-width: 580px;
+  }
+
+  .variant-summary-table th,
+  .variant-summary-table td {
+    padding: 12px 10px;
+    font-size: 0.82rem;
+  }
+}
