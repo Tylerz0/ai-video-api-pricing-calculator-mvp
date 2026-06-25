@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     "",
     "/video-generation-api-pricing",
+    "/seedance-2-api-cost-per-second",
     "/seedance-2-pricing-calculator",
     "/seedance-2-5-pricing",
   ];
