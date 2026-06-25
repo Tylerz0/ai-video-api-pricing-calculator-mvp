@@ -4,6 +4,8 @@ import Link from "next/link";
 import type { PricingRow } from "@/lib/pricing";
 import pricingData from "@/pricing-data.json";
 
+import { EmailCaptureForm } from "./email-capture-form";
+
 export const dynamic = "force-static";
 
 const pageTitle = "Seedance 2.5 API Pricing Tracker | Video API Cost";
@@ -250,23 +252,7 @@ export default function SeedanceTwoFivePricingPage() {
             becomes available. No spam — only pricing updates.
           </p>
         </div>
-        <form
-          action="mailto:hello@videoapicost.com?subject=Seedance%202.5%20pricing%20update"
-          className="email-capture-form"
-          encType="text/plain"
-          method="get"
-        >
-          <label className="sr-only" htmlFor="seedance-25-email">
-            Email address
-          </label>
-          <input
-            id="seedance-25-email"
-            name="email"
-            placeholder="you@example.com"
-            type="email"
-          />
-          <button type="submit">Notify me</button>
-        </form>
+        <EmailCaptureForm />
       </section>
 
       <section
