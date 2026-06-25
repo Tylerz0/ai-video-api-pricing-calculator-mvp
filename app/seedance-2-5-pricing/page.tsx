@@ -421,6 +421,18 @@ export default function SeedanceTwoFivePricingPage() {
           public rate, billing unit, model variant, and output resolution can be
           verified.
         </p>
+        <p className="open-data-link">
+          <a
+            href="https://github.com/Tylerz0/seedance-2-5-api-pricing"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            View open data repository on GitHub
+            <span className="external-mark" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        </p>
       </section>
 
       <section className="content-section faq" aria-labelledby="faq-title">

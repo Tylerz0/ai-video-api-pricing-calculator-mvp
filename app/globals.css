@@ -834,6 +834,23 @@ tbody td {
   padding: 15px 32px;
 }
 
+.open-data-link {
+  background: var(--surface-muted);
+  font-size: 0.78rem;
+  margin-top: 0;
+  padding: 0 32px 15px;
+}
+
+.open-data-link a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.open-data-link a:hover {
+  color: var(--accent);
+}
+
 .baseline-table {
   margin-top: 62px;
 }
