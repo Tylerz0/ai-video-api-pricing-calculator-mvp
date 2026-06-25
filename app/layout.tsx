@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
@@ -78,6 +80,8 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           </div>
         </header>
         <main>{children}</main>
+        <Analytics />
+        <SpeedInsights />
         <footer className="site-footer">
           <div className="shell footer-inner">
             <p>Independent AI video API cost estimates.</p>
