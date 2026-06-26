@@ -20,6 +20,7 @@ This file provides concise site context for inference-time use. It does not gran
 - [Video Generation API Pricing](https://videoapicost.com/video-generation-api-pricing): AI video API pricing hub for text-to-video, image-to-video, billing units, and model-level pricing pages.
 - [Seedance 2.0 API Cost Per Second](https://videoapicost.com/seedance-2-api-cost-per-second): Reference page for Seedance 2.0 listed public 720p prices normalized to USD per output second, including formula examples and source notes.
 - [Seedance 2 Cost Per Minute](https://videoapicost.com/seedance-2-cost-per-minute): Reference page converting listed public 720p Seedance 2 per-second prices into USD per output minute and hour.
+- [Cheapest Seedance 2 API](https://videoapicost.com/seedance-2-cheapest-api): 720p provider ranking sorted by listed public price per output second, with source links and caveats.
 - [Seedance 2 Pricing Calculator](https://videoapicost.com/seedance-2-pricing-calculator): Compares BytePlus official Seedance 2 estimates with public pricing across fal.ai, PiAPI, OpenRouter, EvoLink, and Kie.ai, with filters for output resolution, monthly video volume, and video duration.
 - [Seedance 2.5 API Pricing Tracker](https://videoapicost.com/seedance-2-5-pricing): Tracks official and provider pricing publication status while confirmed Seedance 2.5 API pricing is unavailable.
 
