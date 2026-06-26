@@ -19,12 +19,25 @@ const pageTitle =
   "Seedance 2.0 API Cost Per Second: 720p Price per Output Second";
 const pageDescription =
   "Compare Seedance 2.0 API pricing normalized to USD per output second. Estimate any 720p video generation volume using video count × seconds × price per second.";
+const pageUrl = "https://videoapicost.com/seedance-2-api-cost-per-second";
 
 export const metadata: Metadata = {
   title: pageTitle,
   description: pageDescription,
   alternates: {
-    canonical: "/seedance-2-api-cost-per-second",
+    canonical: pageUrl,
+  },
+  openGraph: {
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl,
+    siteName: "Video API Cost",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: pageTitle,
+    description: pageDescription,
   },
 };
 
@@ -71,9 +84,42 @@ function getSourceRel(row: PricingRow) {
   return "noreferrer";
 }
 
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": `${pageUrl}#breadcrumbs`,
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://videoapicost.com/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Video Generation API Pricing",
+      item: "https://videoapicost.com/video-generation-api-pricing",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: "Seedance 2.0 API Cost Per Second",
+      item: pageUrl,
+    },
+  ],
+};
+
 export default function SeedanceTwoApiCostPerSecondPage() {
   return (
     <div className="shell page-section">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+        type="application/ld+json"
+      />
+
       <nav className="breadcrumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link>
         <span aria-hidden="true">/</span>

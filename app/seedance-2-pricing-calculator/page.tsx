@@ -244,7 +244,7 @@ const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "SoftwareApplication",
+      "@type": ["WebApplication", "SoftwareApplication"],
       "@id": `${pageUrl}#software-application`,
       name: "Seedance 2.0 API Pricing Calculator",
       description:

@@ -140,6 +140,30 @@ const structuredData = {
       url: "https://videoapicost.com/seedance-2-5-pricing",
     },
     {
+      "@type": "BreadcrumbList",
+      "@id": "https://videoapicost.com/seedance-2-5-pricing#breadcrumbs",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://videoapicost.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Video Generation API Pricing",
+          item: "https://videoapicost.com/video-generation-api-pricing",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Seedance 2.5 API Pricing Tracker",
+          item: "https://videoapicost.com/seedance-2-5-pricing",
+        },
+      ],
+    },
+    {
       "@type": "FAQPage",
       mainEntity: faqItems.map((item) => ({
         "@type": "Question",

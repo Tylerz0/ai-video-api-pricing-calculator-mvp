@@ -3,12 +3,28 @@ import Link from "next/link";
 
 export const dynamic = "force-static";
 
+const pageTitle = "Video API Cost | AI Video API Pricing Calculator";
+const pageDescription =
+  "Estimate and compare AI video generation API costs with transparent, provider-level pricing calculators.";
+const pageUrl = "https://videoapicost.com/";
+
 export const metadata: Metadata = {
-  title: "Video API Cost | AI Video API Pricing Calculator",
-  description:
-    "Estimate and compare AI video generation API costs with transparent, provider-level pricing calculators.",
+  title: pageTitle,
+  description: pageDescription,
   alternates: {
-    canonical: "/",
+    canonical: pageUrl,
+  },
+  openGraph: {
+    title: pageTitle,
+    description: pageDescription,
+    url: pageUrl,
+    siteName: "Video API Cost",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: pageTitle,
+    description: pageDescription,
   },
 };
 
