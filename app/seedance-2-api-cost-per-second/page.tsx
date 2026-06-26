@@ -279,11 +279,27 @@ export default function SeedanceTwoApiCostPerSecondPage() {
 
       <section className="content-section" aria-labelledby="next-steps-title">
         <p className="eyebrow">Next steps</p>
-        <h2 id="next-steps-title">Estimate monthly cost or track new pricing</h2>
+        <h2 id="next-steps-title">
+          Compare seconds, minutes, providers, or monthly cost
+        </h2>
         <p>
           Need a full monthly estimate? Use the{" "}
           <Link className="text-link" href="/seedance-2-pricing-calculator">
             Seedance 2.0 pricing calculator
+          </Link>
+          .
+        </p>
+        <p>
+          Need a per-minute budget view? See{" "}
+          <Link className="text-link" href="/seedance-2-cost-per-minute">
+            Seedance 2 cost per minute
+          </Link>
+          .
+        </p>
+        <p>
+          Comparing listed provider prices? See{" "}
+          <Link className="text-link" href="/seedance-2-cheapest-api">
+            cheapest Seedance 2 API providers
           </Link>
           .
         </p>

@@ -4,7 +4,7 @@
 
 Pricing data is manually collected from public provider pricing pages and normalized to USD per output second. Calculators compare provider prices at the same selected output resolution whenever possible.
 
-The default Seedance 2 scenario is 1,000 videos per month at 8 seconds per video. The recommended default comparison uses 720p rows so provider estimates are compared fairly.
+The default Seedance 2.0 scenario is 1,000 videos per month at 8 seconds per video. The recommended default comparison uses 720p rows so provider estimates are compared fairly.
 
 Monthly cost formula: `videos per month × seconds per video × provider price per output second`.
 
@@ -18,17 +18,17 @@ This file provides concise site context for inference-time use. It does not gran
 
 - [Video API Cost homepage](https://videoapicost.com/): Overview of the site's AI video API cost estimation tools.
 - [Video Generation API Pricing](https://videoapicost.com/video-generation-api-pricing): AI video API pricing hub for text-to-video, image-to-video, billing units, and model-level pricing pages.
-- [Seedance 2.0 API Cost Per Second](https://videoapicost.com/seedance-2-api-cost-per-second): Reference page for Seedance 2.0 listed public 720p prices normalized to USD per output second, including formula examples and source notes.
-- [Seedance 2 Cost Per Minute](https://videoapicost.com/seedance-2-cost-per-minute): Reference page converting listed public 720p Seedance 2 per-second prices into USD per output minute and hour.
-- [Cheapest Seedance 2 API](https://videoapicost.com/seedance-2-cheapest-api): 720p provider ranking sorted by listed public price per output second, with source links and caveats.
-- [Seedance 2 Pricing Calculator](https://videoapicost.com/seedance-2-pricing-calculator): Compares BytePlus official Seedance 2 estimates with public pricing across fal.ai, PiAPI, OpenRouter, EvoLink, and Kie.ai, with filters for output resolution, monthly video volume, and video duration.
-- [Seedance 2.5 API Pricing Tracker](https://videoapicost.com/seedance-2-5-pricing): Tracks official and provider pricing publication status while confirmed Seedance 2.5 API pricing is unavailable.
+- [Seedance 2.0 API Cost Per Second](https://videoapicost.com/seedance-2-api-cost-per-second): Reference page for Seedance 2.0 listed public 720p prices normalized to USD per output second. Covers the Seedance 2 API cost per second query intent, with formula examples and source notes.
+- [Seedance 2.0 Cost Per Minute](https://videoapicost.com/seedance-2-cost-per-minute): Reference page converting listed public 720p Seedance 2.0 per-second prices into USD per output minute and hour. Covers the Seedance 2 cost per minute query intent.
+- [Cheapest Seedance 2.0 API](https://videoapicost.com/seedance-2-cheapest-api): 720p provider ranking sorted by listed public price per output second, with source links and caveats. Covers the Cheapest Seedance 2 API query intent.
+- [Seedance 2.0 Pricing Calculator](https://videoapicost.com/seedance-2-pricing-calculator): Compares BytePlus official Seedance 2.0 estimates with public pricing across fal.ai, PiAPI, OpenRouter, EvoLink, and Kie.ai, with filters for output resolution, monthly video volume, and video duration. Covers the Seedance 2 pricing calculator query intent.
+- [Seedance 2.5 API Pricing Tracker](https://videoapicost.com/seedance-2-5-pricing): Tracks confirmed public and provider pricing publication status while confirmed Seedance 2.5 API pricing is unavailable. Covers the Seedance 2.5 pricing tracker query intent.
 
 ## Pricing methodology
 
-- [Seedance 2 default comparison](https://videoapicost.com/seedance-2-pricing-calculator#default-comparison-title): Server-rendered comparison using 1,000 eight-second videos at 720p.
-- [Seedance 2 pricing methodology](https://videoapicost.com/seedance-2-pricing-calculator#methodology-title): Explains manual collection, normalization, resolution matching, calculation, and verification guidance.
-- [Seedance 2 provider sources](https://videoapicost.com/seedance-2-pricing-calculator#sources-title): Links to public provider pages used for the listed pricing estimates.
+- [Seedance 2.0 default comparison](https://videoapicost.com/seedance-2-pricing-calculator#default-comparison-title): Server-rendered comparison using 1,000 eight-second videos at 720p.
+- [Seedance 2.0 pricing methodology](https://videoapicost.com/seedance-2-pricing-calculator#methodology-title): Explains manual collection, normalization, resolution matching, calculation, and verification guidance.
+- [Seedance 2.0 provider sources](https://videoapicost.com/seedance-2-pricing-calculator#sources-title): Links to public provider pages used for the listed pricing estimates.
 
 ## Optional
 

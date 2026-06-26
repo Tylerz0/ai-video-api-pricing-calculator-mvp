@@ -16,9 +16,9 @@ import pricingData from "@/pricing-data.json";
 export const dynamic = "force-static";
 
 const pageTitle =
-  "Seedance 2 Cost Per Minute: 720p API Price per Output Minute";
+  "Seedance 2.0 Cost Per Minute: 720p API Price per Output Minute";
 const pageDescription =
-  "Compare Seedance 2 720p API pricing by output minute. Estimate video generation costs using price per output second × 60, with provider sources and last checked dates.";
+  "Compare Seedance 2.0 720p API pricing by output minute. Estimate video generation costs using price per output second × 60, with provider sources and last checked dates.";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -99,14 +99,14 @@ export default function SeedanceTwoCostPerMinutePage() {
         <span aria-hidden="true">/</span>
         <Link href="/video-generation-api-pricing">Video API pricing</Link>
         <span aria-hidden="true">/</span>
-        <span>Seedance 2 cost per minute</span>
+        <span>Seedance 2.0 cost per minute</span>
       </nav>
 
       <section className="page-heading">
         <p className="eyebrow">Cost per output minute</p>
-        <h1>Seedance 2 Cost Per Minute</h1>
+        <h1>Seedance 2.0 Cost Per Minute</h1>
         <p>
-          Compare Seedance 2 listed public API pricing converted to USD per
+          Compare Seedance 2.0 listed public API pricing converted to USD per
           output minute, with a default focus on 720p rows so providers are
           compared at the same output resolution.
         </p>
@@ -121,7 +121,7 @@ export default function SeedanceTwoCostPerMinutePage() {
         highestCostPerMinute !== null ? (
           <>
             <p className="quick-answer-intro">
-              Based on listed public API prices, Seedance 2 720p prices in this
+              Based on listed public API prices, Seedance 2.0 720p prices in this
               dataset can be converted to USD per output minute.
             </p>
             <ul className="quick-answer-list">
@@ -159,13 +159,13 @@ export default function SeedanceTwoCostPerMinutePage() {
             </p>
           </>
         ) : (
-          <p>No listed 720p Seedance 2 pricing rows are available yet.</p>
+          <p>No listed 720p Seedance 2.0 pricing rows are available yet.</p>
         )}
       </section>
 
       <section className="content-section" aria-labelledby="formula-title">
         <p className="eyebrow">Formula</p>
-        <h2 id="formula-title">How to calculate Seedance 2 cost per minute</h2>
+        <h2 id="formula-title">How to calculate Seedance 2.0 cost per minute</h2>
         <div className="quick-answer-formula">
           <p className="quick-answer-formula-title">
             Per-output-minute estimate
@@ -217,7 +217,7 @@ export default function SeedanceTwoCostPerMinutePage() {
           <div>
             <p className="eyebrow">720p normalized pricing</p>
             <h2 id="pricing-table-title">
-              Seedance 2 720p cost per output minute
+              Seedance 2.0 720p cost per output minute
             </h2>
           </div>
           <p>Server-rendered from local pricing data</p>
@@ -225,7 +225,7 @@ export default function SeedanceTwoCostPerMinutePage() {
         <div className="table-wrap">
           <table className="pricing-table pricing-table-wide">
             <caption className="sr-only">
-              Seedance 2 720p normalized cost per output minute table
+              Seedance 2.0 720p normalized cost per output minute table
             </caption>
             <thead>
               <tr>
@@ -326,14 +326,21 @@ export default function SeedanceTwoCostPerMinutePage() {
         <p>
           Need a full monthly estimate? Use the{" "}
           <Link className="text-link" href="/seedance-2-pricing-calculator">
-            Seedance 2 pricing calculator
+            Seedance 2.0 pricing calculator
           </Link>
           .
         </p>
         <p>
           Need the base per-second reference? See{" "}
           <Link className="text-link" href="/seedance-2-api-cost-per-second">
-            Seedance 2 API cost per second
+            Seedance 2.0 API cost per second
+          </Link>
+          .
+        </p>
+        <p>
+          Comparing listed provider prices? See{" "}
+          <Link className="text-link" href="/seedance-2-cheapest-api">
+            cheapest Seedance 2.0 API providers
           </Link>
           .
         </p>

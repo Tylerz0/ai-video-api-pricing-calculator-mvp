@@ -17,9 +17,9 @@ import pricingData from "@/pricing-data.json";
 
 export const dynamic = "force-static";
 
-const pageTitle = "Cheapest Seedance 2 API: Compare 720p Provider Pricing";
+const pageTitle = "Cheapest Seedance 2.0 API: Compare 720p Provider Pricing";
 const pageDescription =
-  "Find the lowest listed Seedance 2 720p API price across providers. Compare price per output second, 8-second video cost, per-minute cost, and provider sources.";
+  "Find the lowest listed Seedance 2.0 720p API price across providers. Compare price per output second, 8-second video cost, per-minute cost, and provider sources.";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -82,14 +82,14 @@ export default function SeedanceTwoCheapestApiPage() {
         <span aria-hidden="true">/</span>
         <Link href="/video-generation-api-pricing">Video API pricing</Link>
         <span aria-hidden="true">/</span>
-        <span>Cheapest Seedance 2 API</span>
+        <span>Cheapest Seedance 2.0 API</span>
       </nav>
 
       <section className="page-heading">
         <p className="eyebrow">Cheapest listed 720p route</p>
-        <h1>Cheapest Seedance 2 API</h1>
+        <h1>Cheapest Seedance 2.0 API</h1>
         <p>
-          Compare listed public Seedance 2 API prices at 720p, sorted by
+          Compare listed public Seedance 2.0 API prices at 720p, sorted by
           normalized USD per output second so providers are compared at the same
           output resolution.
         </p>
@@ -101,7 +101,7 @@ export default function SeedanceTwoCheapestApiPage() {
           <>
             <p className="quick-answer-intro">
               Based on listed public API prices, the lowest listed 720p
-              Seedance 2 route in this dataset is{" "}
+              Seedance 2.0 route in this dataset is{" "}
               <strong>
                 {lowestRow.provider} {lowestRow.modelName} {lowestRow.mode}
               </strong>
@@ -142,7 +142,7 @@ export default function SeedanceTwoCheapestApiPage() {
             </p>
           </>
         ) : (
-          <p>No listed 720p Seedance 2 pricing rows are available yet.</p>
+          <p>No listed 720p Seedance 2.0 pricing rows are available yet.</p>
         )}
       </section>
 
@@ -171,7 +171,7 @@ export default function SeedanceTwoCheapestApiPage() {
           <div>
             <p className="eyebrow">720p provider ranking</p>
             <h2 id="pricing-table-title">
-              Cheapest 720p Seedance 2 providers
+              Cheapest 720p Seedance 2.0 providers
             </h2>
           </div>
           <p>Sorted by normalized price per output second</p>
@@ -179,7 +179,7 @@ export default function SeedanceTwoCheapestApiPage() {
         <div className="table-wrap">
           <table className="pricing-table pricing-table-wide">
             <caption className="sr-only">
-              Cheapest 720p Seedance 2 provider ranking table
+              Cheapest 720p Seedance 2.0 provider ranking table
             </caption>
             <thead>
               <tr>
@@ -278,21 +278,21 @@ export default function SeedanceTwoCheapestApiPage() {
         <p>
           Need a full monthly estimate? Use the{" "}
           <Link className="text-link" href="/seedance-2-pricing-calculator">
-            Seedance 2 pricing calculator
+            Seedance 2.0 pricing calculator
           </Link>
           .
         </p>
         <p>
           Need the base per-second reference? See{" "}
           <Link className="text-link" href="/seedance-2-api-cost-per-second">
-            Seedance 2 API cost per second
+            Seedance 2.0 API cost per second
           </Link>
           .
         </p>
         <p>
           Comparing longer output durations? See{" "}
           <Link className="text-link" href="/seedance-2-cost-per-minute">
-            Seedance 2 cost per minute
+            Seedance 2.0 cost per minute
           </Link>
           .
         </p>

@@ -430,24 +430,13 @@ export default function SeedancePricingCalculatorPage() {
         </p>
       </section>
 
-      {/* ── 2. Variant navigation ── */}
-      <section className="variant-nav" aria-labelledby="variant-nav-title">
-        <h2 id="variant-nav-title">Seedance 2.0 variants covered</h2>
-        <ul className="variant-nav-list">
-          <li>
-            <a href="#fast-pricing">Seedance 2.0 Fast</a>
-          </li>
-          <li>
-            <a href="#mini-pricing">Seedance 2.0 Mini</a>
-          </li>
-          <li>
-            <a href="#standard-pricing">Seedance 2.0 Standard</a>
-          </li>
-          <li>
-            <span>Provider-specific Pro and no-video-input routes</span>
-          </li>
-        </ul>
-      </section>
+      {/* ── 2. Interactive calculator ── */}
+      <PricingCalculator
+        currency={pricingData.currency}
+        defaultSecondsPerVideo={pricingData.defaultInputs.secondsPerVideo}
+        defaultVideosPerMonth={pricingData.defaultInputs.videosPerMonth}
+        pricingRows={pricingRows}
+      />
 
       {/* ── 3. Cost summary ── */}
       <section className="cost-summary" aria-labelledby="cost-summary-title">
@@ -598,6 +587,69 @@ export default function SeedancePricingCalculatorPage() {
         </p>
       </section>
 
+      <section
+        className="content-section"
+        aria-labelledby="related-cost-guides-title"
+      >
+        <p className="eyebrow">Related guides</p>
+        <h2 id="related-cost-guides-title">
+          Related Seedance 2 cost guides
+        </h2>
+        <p>
+          Use these companion pages when you need a simpler reference for
+          listed public API prices, normalized cost units, or future Seedance
+          pricing status.
+        </p>
+        <ul className="quick-answer-list">
+          <li>
+            <Link
+              className="text-link"
+              href="/seedance-2-api-cost-per-second"
+            >
+              Seedance 2 API cost per second
+            </Link>{" "}
+            for normalized per-output-second pricing.
+          </li>
+          <li>
+            <Link className="text-link" href="/seedance-2-cost-per-minute">
+              Seedance 2 cost per minute
+            </Link>{" "}
+            for per-minute and per-hour estimated cost.
+          </li>
+          <li>
+            <Link className="text-link" href="/seedance-2-cheapest-api">
+              Cheapest Seedance 2 API providers
+            </Link>{" "}
+            for a price-only 720p provider ranking.
+          </li>
+          <li>
+            <Link className="text-link" href="/seedance-2-5-pricing">
+              Seedance 2.5 pricing tracker
+            </Link>{" "}
+            for monitoring pricing availability beyond Seedance 2.0.
+          </li>
+        </ul>
+      </section>
+
+      {/* ── 2. Variant navigation ── */}
+      <section className="variant-nav" aria-labelledby="variant-nav-title">
+        <h2 id="variant-nav-title">Seedance 2.0 variants covered</h2>
+        <ul className="variant-nav-list">
+          <li>
+            <a href="#fast-pricing">Seedance 2.0 Fast</a>
+          </li>
+          <li>
+            <a href="#mini-pricing">Seedance 2.0 Mini</a>
+          </li>
+          <li>
+            <a href="#standard-pricing">Seedance 2.0 Standard</a>
+          </li>
+          <li>
+            <span>Provider-specific Pro and no-video-input routes</span>
+          </li>
+        </ul>
+      </section>
+
       {/* ── 5. Variant summary ── */}
       <section
         className="content-section"
@@ -652,14 +704,6 @@ export default function SeedancePricingCalculatorPage() {
           </table>
         </div>
       </section>
-
-      {/* ── 6. Interactive calculator ── */}
-      <PricingCalculator
-        currency={pricingData.currency}
-        defaultSecondsPerVideo={pricingData.defaultInputs.secondsPerVideo}
-        defaultVideosPerMonth={pricingData.defaultInputs.videosPerMonth}
-        pricingRows={pricingRows}
-      />
 
       {/* ── 7. Fast pricing ── */}
       <section className="content-section" aria-labelledby="fast-pricing">
