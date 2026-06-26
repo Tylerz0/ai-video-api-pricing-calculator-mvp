@@ -411,23 +411,62 @@ export default function SeedancePricingCalculatorPage() {
       </nav>
 
       {/* ── 1. Hero ── */}
-      <section className="page-heading calculator-page-heading">
-        <p className="eyebrow">Provider comparison</p>
-        <h1>Seedance 2.0 API Pricing Calculator</h1>
-        <p>
-          Compare Seedance 2.0 Standard, Fast, and Mini API pricing across
-          providers. The default scenario is 1,000 videos per month at 8
-          seconds per video. Compare providers at the same selected resolution.
-        </p>
-        <p>
-          Some providers refer to this model family as Seedance 2, while others
-          list it as Seedance 2.0. This page compares Seedance 2.0 Standard,
-          Fast, Mini, and provider-specific modes across public API providers.
-        </p>
-        <p className="updated-date">
-          Pricing data last updated{" "}
-          <time dateTime={pricingData.lastUpdated}>{displayDate}</time>
-        </p>
+      <section className="calculator-hero">
+        <div className="page-heading calculator-page-heading">
+          <p className="eyebrow">Provider comparison</p>
+          <h1>Seedance 2.0 API Pricing Calculator</h1>
+          <p>
+            Compare Seedance 2.0 Standard, Fast, and Mini API pricing across
+            providers. The default scenario is 1,000 videos per month at 8
+            seconds per video. Compare providers at the same selected resolution.
+          </p>
+          <p>
+            Some providers refer to this model family as Seedance 2, while others
+            list it as Seedance 2.0. This page compares Seedance 2.0 Standard,
+            Fast, Mini, and provider-specific modes across public API providers.
+          </p>
+          <p className="updated-date">
+            Pricing data last updated{" "}
+            <time dateTime={pricingData.lastUpdated}>{displayDate}</time>
+          </p>
+          <ul className="hero-trust-list" aria-label="Pricing comparison notes">
+            <li>Same-resolution comparison</li>
+            <li>Local pricing data</li>
+            <li>Provider source links</li>
+          </ul>
+        </div>
+
+        <aside className="hero-summary-card" aria-label="Seedance 2.0 pricing summary">
+          <p className="summary-badge">Lowest listed 720p route</p>
+          <h2>
+            {cheapestPriceRow.provider}
+            <span>{cheapestPriceRow.modelName}</span>
+          </h2>
+          <p className="hero-summary-mode">{cheapestPriceRow.mode}</p>
+          <p className="hero-summary-price">
+            {formatCurrency(cheapestPriceRow.pricePerSecond, 5)}
+            <span>per output second</span>
+          </p>
+          <div className="hero-summary-grid">
+            <div>
+              <span>Default scenario</span>
+              <strong>
+                {pricingData.defaultInputs.videosPerMonth.toLocaleString(
+                  "en-US",
+                )}{" "}
+                videos × {pricingData.defaultInputs.secondsPerVideo}s
+              </strong>
+            </div>
+            <div>
+              <span>Estimated monthly cost</span>
+              <strong>{formatCurrency(cheapestPriceRow.monthlyCost, 2)}</strong>
+            </div>
+          </div>
+          <p className="hero-summary-note">
+            Same-resolution comparison at 720p. Last updated{" "}
+            <time dateTime={pricingData.lastUpdated}>{displayDate}</time>.
+          </p>
+        </aside>
       </section>
 
       {/* ── 2. Interactive calculator ── */}
@@ -517,20 +556,27 @@ export default function SeedancePricingCalculatorPage() {
             <tbody>
               {defaultComparison.map((row, index) => (
                 <tr
+                  className={index === 0 ? "is-lowest-row" : undefined}
                   key={`${row.provider}-${row.modelName}-${row.mode}-${row.resolution}`}
                 >
                   <th scope="row">
                     <span>{row.provider}</span>
                     {index === 0 ? (
-                      <small>Lowest listed 720p rate</small>
+                      <small className="lowest-rate-badge">
+                        Lowest listed 720p rate
+                      </small>
                     ) : null}
                   </th>
                   <td>
                     <span className="table-primary">{row.modelName}</span>
-                    <small className="table-secondary">{row.mode}</small>
+                    <small className="table-secondary">
+                      <span className="table-badge">{row.mode}</span>
+                    </small>
                   </td>
                   <td>
-                    <span className="table-primary">{row.resolution}</span>
+                    <span className="table-badge table-badge-neutral">
+                      {row.resolution}
+                    </span>
                     {"audioPricing" in row &&
                     typeof row.audioPricing === "string" ? (
                       <small className="table-secondary">
@@ -538,7 +584,7 @@ export default function SeedancePricingCalculatorPage() {
                       </small>
                     ) : null}
                   </td>
-                  <td>
+                  <td className="numeric-cell">
                     <span className="table-primary">
                       {formatCurrency(row.pricePerSecond, 5)}
                     </span>
@@ -551,8 +597,10 @@ export default function SeedancePricingCalculatorPage() {
                       </small>
                     ) : null}
                   </td>
-                  <td>{formatCurrency(row.costPerVideo, 5)}</td>
-                  <td className="monthly-cost">
+                  <td className="numeric-cell">
+                    {formatCurrency(row.costPerVideo, 5)}
+                  </td>
+                  <td className="monthly-cost numeric-cell">
                     {formatCurrency(row.monthlyCost, 2)}
                   </td>
                   <td className="source-cell">
@@ -585,6 +633,29 @@ export default function SeedancePricingCalculatorPage() {
           {pricingData.lastUpdated}. Always verify pricing and availability
           with the provider before production use.
         </p>
+      </section>
+
+      <section className="trust-strip" aria-label="Pricing calculator trust notes">
+        <article>
+          <span aria-hidden="true">◎</span>
+          <h3>Same selected resolution</h3>
+          <p>Default rows compare 720p routes only.</p>
+        </article>
+        <article>
+          <span aria-hidden="true">↻</span>
+          <h3>Real-time calculation</h3>
+          <p>Costs update when volume, duration, or resolution changes.</p>
+        </article>
+        <article>
+          <span aria-hidden="true">◇</span>
+          <h3>Multiple modes</h3>
+          <p>Standard, Fast, Mini, and provider-specific rows are included.</p>
+        </article>
+        <article>
+          <span aria-hidden="true">✓</span>
+          <h3>Transparent pricing</h3>
+          <p>Each row links back to its listed provider source.</p>
+        </article>
       </section>
 
       <section

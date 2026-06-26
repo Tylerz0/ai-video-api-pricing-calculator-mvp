@@ -72,6 +72,8 @@ export function PricingCalculator({
   );
 
   const generatedSeconds = videosPerMonth * secondsPerVideo;
+  const lowestEstimate = comparison[0]?.monthlyCost ?? null;
+  const highestEstimate = comparison[comparison.length - 1]?.monthlyCost ?? null;
 
   function normalizeValue(value: string, fallback: number, max: number) {
     const parsed = Number(value);
@@ -152,8 +154,39 @@ export function PricingCalculator({
         </label>
       </div>
 
+      <div className="estimate-grid" aria-live="polite">
+        <article>
+          <span>Total generated seconds</span>
+          <strong>{integerFormatter.format(generatedSeconds)}</strong>
+          <small>seconds / month</small>
+        </article>
+        <article>
+          <span>Lowest estimate</span>
+          <strong>
+            {lowestEstimate === null
+              ? "Not available"
+              : formatCurrency(lowestEstimate, currency)}
+          </strong>
+          <small>per month</small>
+        </article>
+        <article>
+          <span>Highest estimate</span>
+          <strong>
+            {highestEstimate === null
+              ? "Not available"
+              : formatCurrency(highestEstimate, currency)}
+          </strong>
+          <small>per month</small>
+        </article>
+        <article>
+          <span>Selected resolution</span>
+          <strong>{selectedResolution || "Not available"}</strong>
+          <small>same-resolution rows only</small>
+        </article>
+      </div>
+
       <div className="table-wrap">
-        <table>
+        <table className="pricing-table calculator-table">
           <caption className="sr-only">
             Seedance 2 provider pricing comparison for the selected{" "}
             {selectedResolution} resolution
@@ -172,27 +205,34 @@ export function PricingCalculator({
             {comparison.length > 0 ? (
               comparison.map((row, index) => (
                 <tr
+                  className={index === 0 ? "is-lowest-row" : undefined}
                   key={`${row.provider}-${row.modelName}-${row.mode}-${row.resolution}`}
                 >
                   <th scope="row">
                     <span>{row.provider}</span>
                     {index === 0 ? (
-                      <small>Lowest rate for selected resolution</small>
+                      <small className="lowest-rate-badge">
+                        Lowest rate for selected resolution
+                      </small>
                     ) : null}
                   </th>
                   <td>
                     <span className="table-primary">{row.modelName}</span>
-                    <small className="table-secondary">{row.mode}</small>
+                    <small className="table-secondary">
+                      <span className="table-badge">{row.mode}</span>
+                    </small>
                   </td>
                   <td>
-                    <span className="table-primary">{row.resolution}</span>
+                    <span className="table-badge table-badge-neutral">
+                      {row.resolution}
+                    </span>
                     {row.audioPricing ? (
                       <small className="table-secondary">
                         {row.audioPricing}
                       </small>
                     ) : null}
                   </td>
-                  <td>
+                  <td className="numeric-cell">
                     <span className="table-primary">
                       {formatCurrency(row.pricePerSecond, currency)}
                     </span>
@@ -209,8 +249,10 @@ export function PricingCalculator({
                       </small>
                     ) : null}
                   </td>
-                  <td>{formatCurrency(row.costPerVideo, currency)}</td>
-                  <td className="monthly-cost">
+                  <td className="numeric-cell">
+                    {formatCurrency(row.costPerVideo, currency)}
+                  </td>
+                  <td className="monthly-cost numeric-cell">
                     {formatCurrency(row.monthlyCost, currency)}
                   </td>
                 </tr>
