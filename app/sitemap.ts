@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/video-generation-api-pricing",
     "/seedance-2-api-cost-per-second",
+    "/seedance-2-cost-per-minute",
     "/seedance-2-pricing-calculator",
     "/seedance-2-5-pricing",
   ];
