@@ -11,8 +11,8 @@ export const dynamic = "force-static";
 const pageTitle = "Seedance 2.5 API Pricing Tracker | Video API Cost";
 const pageDescription =
   "Seedance 2.5 does not yet have a confirmed public API rate. Track Seedance 2.5 API pricing status, provider availability, and Seedance 2.0 baseline costs.";
-const lastCheckedDate = "2026-06-24";
-const lastCheckedDisplay = "June 24, 2026";
+const lastCheckedDate = "2026-06-27";
+const lastCheckedDisplay = "June 27, 2026";
 
 export const metadata: Metadata = {
   title: pageTitle,
