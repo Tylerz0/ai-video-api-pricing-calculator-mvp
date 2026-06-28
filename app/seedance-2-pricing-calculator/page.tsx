@@ -13,6 +13,7 @@ const pageDescription =
   "Compare Seedance 2.0 Standard, Fast, and Mini API pricing across providers. Estimate cost per 8-second video and monthly generation costs.";
 const siteUrl = "https://videoapicost.com";
 const pageUrl = `${siteUrl}/seedance-2-pricing-calculator`;
+const ogImageUrl = `${siteUrl}/og/seedance-2-pricing-calculator.png`;
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -26,11 +27,20 @@ export const metadata: Metadata = {
     url: pageUrl,
     siteName: "Video API Cost",
     type: "website",
+    images: [
+      {
+        url: ogImageUrl,
+        width: 1200,
+        height: 630,
+        alt: "Seedance 2.0 API Pricing",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: pageTitle,
     description: pageDescription,
+    images: [ogImageUrl],
   },
 };
 

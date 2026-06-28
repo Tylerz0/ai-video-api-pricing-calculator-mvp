@@ -13,24 +13,36 @@ const pageDescription =
   "Seedance 2.5 does not yet have a confirmed public API rate. Track Seedance 2.5 API pricing status, provider availability, and Seedance 2.0 baseline costs.";
 const lastCheckedDate = "2026-06-27";
 const lastCheckedDisplay = "June 27, 2026";
+const siteUrl = "https://videoapicost.com";
+const pageUrl = `${siteUrl}/seedance-2-5-pricing`;
+const ogImageUrl = `${siteUrl}/og/seedance-2-5-pricing.png`;
 
 export const metadata: Metadata = {
   title: pageTitle,
   description: pageDescription,
   alternates: {
-    canonical: "/seedance-2-5-pricing",
+    canonical: pageUrl,
   },
   openGraph: {
     title: pageTitle,
     description: pageDescription,
-    url: "/seedance-2-5-pricing",
+    url: pageUrl,
     siteName: "Video API Cost",
     type: "website",
+    images: [
+      {
+        url: ogImageUrl,
+        width: 1200,
+        height: 630,
+        alt: "Seedance 2.5 API Pricing Tracker",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: pageTitle,
     description: pageDescription,
+    images: [ogImageUrl],
   },
 };
 
